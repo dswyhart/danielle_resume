@@ -1,0 +1,4 @@
+title = "Danielle's Resume"
+baseURL = "https://example.com"
+theme = "simple-resume"
+disableKinds = ["taxonomy", "term"]
