@@ -14,7 +14,7 @@ position = "Site Reliablity Engineer"
 company = "NCR on the SRE Team"
 location = "FT Worth, TX"
 startdate = "Aug 2015"
-enddate = "Oct2020"
+enddate = "Oct 2020"
 points = [
   "Built the chef cookbooks used to provision the servers and deploy software artifacts to them.",
   "Built, deployed, and maintained the ARM Templates used to migrate on prem infrastructure to Azure.",
@@ -34,7 +34,7 @@ position = "Software Quality Engineer "
 company = "NCR on the Mobile Apps Team"
 location = "FT Worth, TX"
 startdate = "Feb 2011"
-enddate = "Aug2015"
+enddate = "Aug 2015"
 points = [
   "Built and designed testing enviroments and scenerios.",
   "Created, implementing and maintained application test plans and test cases.",
