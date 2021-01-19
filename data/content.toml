@@ -2,6 +2,7 @@ name = "Danielle Swyhart"
 email = "swyhartresume@hotmail.com"
 phone = "8172390307"
 github = "dswyhart"
+website = "DanielleSwyhart.com"
 summary = "I am a Senior level IT professional with an applications operations background focused on cloud technologies using Devops and SRE methodologies. I am focused on reaching any organization's strategic vision and goals while providing a stable, cost efficient, scalable, and fully automated infrastructure and software stack."
 
 [[schools]]
@@ -12,8 +13,8 @@ degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Me
 position = "Site Reliablity Engineer"
 company = "NCR on the SRE Team"
 location = "FT Worth, TX"
-startdate = "August 2015"
-enddate = "October 2020"
+startdate = "Aug 2015"
+enddate = "Oct2020"
 points = [
   "Built the chef cookbooks used to provision the servers and deploy software artifacts to them.",
   "Built, deployed, and maintained the ARM Templates used to migrate on prem infrastructure to Azure.",
@@ -32,8 +33,8 @@ points = [
 position = "Software Quality Engineer "
 company = "NCR on the Mobile Apps Team"
 location = "FT Worth, TX"
-startdate = "February 2011"
-enddate = "August 2015"
+startdate = "Feb 2011"
+enddate = "Aug2015"
 points = [
   "Built and designed testing enviroments and scenerios.",
   "Created, implementing and maintained application test plans and test cases.",
@@ -49,7 +50,7 @@ position = "Tier 3 Support Technician"
 company = "Radiant Systems on the Support Team"
 location = "FT Worth, TX"
 startdate = "June 2006"
-enddate = "February 2011"
+enddate = "Feb 2011"
 points = [
   "Triaged and maintained escalated support incidents.",
   "Wrote and maintained SQL database scripts and procedures to support the product needs.",
