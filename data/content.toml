@@ -3,7 +3,7 @@ email = "swyhartresume@hotmail.com"
 phone = "8172390307"
 github = "dswyhart"
 website = "DanielleSwyhart.com"
-summary = "I am a Senior level IT professional with an applications operations background."
+summary = "I am a Senior level IT professional with an applications operations background focused on cloud technologies using Devops and SRE methodologies. I am focused on reaching any organization's strategic vision and goals while providing a stable, cost efficient, scalable, and fully automated infrastructure and software stack."
 
 [[schools]]
 name = "Courses Taken"
@@ -16,17 +16,17 @@ location = "FT Worth, TX"
 startdate = "Aug 2015"
 enddate = "Oct 2020"
 points = [
-  "Build SQL Servers in the data center and in the cloud.",
-  "Wrote, deployed, maintained SQL server database upgrades",
-  "Wrote SQL jobs with SSIS packages to ship custom spreadsheets to report various data points for the customers or customer support department.",
-  "Designed systems used to maintain applications in a datacenter using SQL stored procedures and jobs.",
-  "Managed petabytes of aggregated data using SQL tasks and stored procedures.",
-  "Provided 24x7 support, incident management, and subject matter expert consultation during system or service interruptions.",
-  "Wrote product specs, flow charts, training documents, and process runbooks.",
-  "Troubleshot application issues due to database troubles and determined root cause and resolution action plans designed.",
-  "Built, maintained, and troubleshot no-SQL database solutions (couchbase, redis cache).",
-  "Built and provided analysis using ELK (Elastic Search, Logstash, Kibana).",
-  "Managed data import servers that would use SQL to import data and then scheduled tasks that would aggregate the data."
+  "Built the chef cookbooks used to provision the servers and deploy software artifacts to them.",
+  "Built, deployed, and maintained the ARM Templates used to migrate on prem infrastructure to Azure.",
+  "Designed, built and maintained all of the QA, Preprod, and production environments spanning every Azure region across the globe to meet the different product needs.",
+  "Designed, scheduled, gained approval and deploy as well as maintained SaaS product versions in preprod and prod environments.",
+  "Implemented application insights and provided analysis to product teams along with creating product enhancement recommendations.",
+  "Provided 24x7 support, incident management, and subject matter expert consultation during system or service interruptions.",
+  "Wrote product specs, flow charts, training documents, and process runbooks.",
+  "Managed petabytes of aggregated data using SQL tasks and stored procedures.",
+  "Built, maintained, and troubleshot no-SQL database solutions (couchbase, redis cache).",
+  "Built and provided analysis using ELK (Elastic Search, Logstash, Kibana).",
+  "I was in the process of learning Terraform and Kubernetes along with containerizing our products."
 ]
 
 [[experiences]]
@@ -36,18 +36,13 @@ location = "FT Worth, TX"
 startdate = "Feb 2011"
 enddate = "Aug 2015"
 points = [
-  "Built and designed testing environments and scenarios.",
-  "Created, implementing and maintained application test plans and test cases.",
-  "Coordinate with multiple teams to develop deployment strategies and methods.",
-  "Identify, document and track defects.",
-  "Regression testing after defect resolutions.",
-  "Write requirements and specs based on developments application needs.",
-  "Managed the Quality Analysis teams during development phases.",
-  "Built SQL servers in the labs.",
-  "Managed SQL database upgrades and deployment strategies.",
-  "Wrote sql /application deployment plans and tested deployment execution.",
-  "Wrote custom SQL reports to assist the sales and acquisition teams to obtain new customers",
-  "Managed aggregated data from thousands of stores and imported the data into hundreds of servers and ship the data to customers via ftp, all done through sql server."
+  "Built and designed testing environments and scenarios.",
+  "Created, implementing and maintained application test plans and test cases.",
+  "Coordinate with multiple teams to develop deployment strategies and methods.",
+  "Identify, document and track defects.",
+  "Regression testing after defect resolutions.",
+  "Write requirements and specs based on developments application needs.",
+  "Managed the Quality Analysis teams during development phases."
 ]
 
 [[experiences]]
@@ -57,31 +52,29 @@ location = "FT Worth, TX"
 startdate = "June 2006"
 enddate = "Feb 2011"
 points = [
-  "Triaged and maintained escalated support incidents.",
-  "Wrote and maintained SQL database scripts and procedures to support the product needs.",
-  "Wrote enhancement requests to the product development teams to handle customer support incidents.",
-  "Managed and wrote processes to handle customer support needs.",
-  "Researched and corrected data reporting issues reported by the customers.",
-  "Tracked down customer's report issues from stored procedures and potential data anomalies"
+  "Triaged and maintained escalated support incidents.",
+  "Wrote and maintained SQL database scripts and procedures to support the product needs.",
+  "Wrote enhancement requests to the product development teams to handle customer support incidents.",
+  "Managed and wrote processes to handle customer support needs."
 ]
 
 
 [[skills]]
 name = "Skills"
 points = [
-  "SaaS",
-  "Cloud IaC",
-  "Full Software Stack administration.",
-  "Designing, Coding, Testing and Deploying of Software to automate manual operational tasks.",
-  "Azure Infrastructure scripting, deploying, and administration.",
-  "Strong Communication and Collaboration Skills.",
-  "Incident Management",
-  "Customer-Centric / Customer-First Mindset and Dedication.",
-  "DevOps/SRE Tools and Technologies (jenkins, chef, artifactory, rundeck, ARM etc.)",
-  "Experience with full administration for all versions of Windows and CentOS Linux.",
-  "SQL DBA and Development using MS SQL Server and PostgreSQL.",
-  "Data center migrations using VMware and Zerto.",
-  "Infrastructure migration to azure cloud using ARM templates.",
-  "Development of software deployment processes and strategies.",
-  "Experience using monitoring tools such as Azure Application Insights, Zabbix, Sensu and New Relic."
+  "SaaS",
+  "Cloud IaC",
+  "Full Software Stack administration.",
+  "Designing, Coding, Testing and Deploying of Software to automate manual operational tasks.",
+  "Azure Infrastructure scripting, deploying, and administration.",
+  "Strong Communication and Collaboration Skills.",
+  "Incident Management",
+  "Customer-Centric / Customer-First Mindset and Dedication.",
+  "DevOps/SRE Tools and Technologies (jenkins, chef, artifactory, rundeck, ARM etc.)",
+  "Experience with full administration for all versions of Windows and CentOS Linux.",
+  "SQL DBA and Development using MS SQL Server and PostgreSQL.",
+  "Data center migrations using VMware and Zerto.",
+  "Infrastructure migration to azure cloud using ARM templates.",
+  "Development of software deployment processes and strategies.",
+  "Experience using monitoring tools such as Azure Application Insights, Zabbix, Sensu and New Relic."
 ]
