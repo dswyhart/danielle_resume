@@ -1,0 +1,3 @@
+[submodule "themes/danielle_resume"]
+	path = themes/danielle_resume
+	url = https://github.com/dswyhart/danielle_resume.git
