@@ -6,11 +6,37 @@ summary = "I am a Senior level IT professional with an applications operations b
 
 [[schools]]
 name = "Courses Taken"
+<<<<<<< HEAD
 degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Methodology","Chef Automation","Habitat by Chef","ARM / Azure CLI","Azure infrastructure","Artifactory","Hashicorp Vault","Ruby","Restful API","Pearl","Powershell","Powershell DSC","Markdown","Zerto","VMware","Software Security","ELK Stack"]
 
 [[experiences]]
 position = "Site Reliablity Engineer"
 company = "NCR on the Infrastructure Team"
+=======
+degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Methodology","Chef Automation","Habitat by Chef","ARM / Azure CLI","Azure infrastructure","Artifactory","Hashicorp Vault","Ruby","Restful API","Pearl","Powershell","Powershell DSC","Markdown","Zerto","VMware","Software Security","ELK Stack","AWS Cloudformation","AWS ECS","AWS EKS","AWS Cloudwatch","AWS Synthetic Canaries","AWS Lambda","Terraform (Azure & AWS)","Splunk"]
+
+[[experiences]]
+position = "Site Reliability Engineer"
+company = "Nava Public Benefit Company"
+location = "1445 New York Ave NW Suite 300, Washington, DC 20005"
+startdate = "April 2021"
+enddate = "Current"
+points = [
+  "Federal Government - Centers for Medicare & Medicaid Services (CMS) Cloud Services:",
+  "Joined a product team to develop, document, write Terraform IaC, and deploy monitoring solutions to monitor a Temporal platform running on Amazon Elastic Kubernetes (EKS).",
+  "Developed, documented, and trained the staff on Incident Management process and exercises.",
+  "Wrote Splunk Dashboards and search queries using The Splunk Search Processing Language (SPL).",
+  "State Government - California Department of Technology (CDT):",
+  "Qualitative research interviews to determine system stability and scalability.",
+  "Research and data analysis.",
+  "Systems stability and scalability evaluation.",
+  "Write Assessement reports for the project oversight commitee."
+]
+
+[[experiences]]
+position = "Site Reliablity Engineer"
+company = "NCR on the SRE Team"
+>>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 location = "FT Worth, TX"
 startdate = "August 2015"
 enddate = "October 2020"
@@ -30,7 +56,11 @@ points = [
 
 [[experiences]]
 position = "Software Quality Engineer "
+<<<<<<< HEAD
 company = "NCR on the Mobile Applications Team"
+=======
+company = "NCR on the Mobile Apps Team"
+>>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 location = "FT Worth, TX"
 startdate = "February 2011"
 enddate = "August 2015"
@@ -44,6 +74,7 @@ points = [
   "Managed the Quality Analysis teams during development phases."
 ]
 
+<<<<<<< HEAD
 [[experiences]]
 position = "Tier 3 Support Technician"
 company = "Radiant Systems on the Support Team"
@@ -58,6 +89,8 @@ points = [
 ]
 
 
+=======
+>>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 [[skills]]
 name = "Skills"
 points = [
@@ -76,4 +109,8 @@ points = [
   "Infrastructure migration to azure cloud using ARM templates.",
   "Development of software deployment processes and stratigies.",
   "Experience using monitoring tools such as Azure Application Insights, Zabbix, Sensu and New Relic."
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f

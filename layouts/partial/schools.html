@@ -1,0 +1,16 @@
+<section>
+    <h2>Courses & Training</h2>
+    {{ range . }}
+    <div class="school">
+      <div class="heading-line">
+        <h3>{{ .name }}</h3>
+      </div>
+      {{ range .degrees }}
+      <p>
+        <em>{{ . }}</em>
+      </p>
+      {{ end }}
+    </div>
+    {{ end }}
+  </section>
+  

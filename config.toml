@@ -1,4 +1,8 @@
 title = "Danielle's Resume"
+<<<<<<< HEAD
 baseURL = "https://example.com"
+=======
+baseURL = "https://dswyhart.github.io"
+>>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 theme = "simple-resume"
 disableKinds = ["taxonomy", "term"]
