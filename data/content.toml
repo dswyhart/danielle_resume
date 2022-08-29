@@ -6,19 +6,12 @@ summary = "I am a Senior level IT professional with an applications operations b
 
 [[schools]]
 name = "Courses Taken"
-<<<<<<< HEAD
-degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Methodology","Chef Automation","Habitat by Chef","ARM / Azure CLI","Azure infrastructure","Artifactory","Hashicorp Vault","Ruby","Restful API","Pearl","Powershell","Powershell DSC","Markdown","Zerto","VMware","Software Security","ELK Stack"]
-
-[[experiences]]
-position = "Site Reliablity Engineer"
-company = "NCR on the Infrastructure Team"
-=======
-degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Methodology","Chef Automation","Habitat by Chef","ARM / Azure CLI","Azure infrastructure","Artifactory","Hashicorp Vault","Ruby","Restful API","Pearl","Powershell","Powershell DSC","Markdown","Zerto","VMware","Software Security","ELK Stack","AWS Cloudformation","AWS ECS","AWS EKS","AWS Cloudwatch","AWS Synthetic Canaries","AWS Lambda","Terraform (Azure & AWS)","Splunk"]
+degrees = ["A+","Network+","SQL Scripting","SQL Server Administration","Agile Methodology","Chef Automation","Habitat by Chef","ARM / Azure CLI","Azure infrastructure","Artifactory","Hashicorp Vault","Ruby","Restful API","Pearl","Powershell","Powershell DSC","Markdown","Zerto","VMware","Software Security","ELK Stack","AWS Cloudformation","AWS ECS","AWS EKS","AWS Cloudwatch","AWS Synthetic Canaries","AWS Lambda","Terraform (Azure and AWS)","Splunk"]
 
 [[experiences]]
 position = "Site Reliability Engineer"
 company = "Nava Public Benefit Company"
-location = "1445 New York Ave NW Suite 300, Washington, DC 20005"
+location = "Remote"
 startdate = "April 2021"
 enddate = "Current"
 points = [
@@ -36,7 +29,6 @@ points = [
 [[experiences]]
 position = "Site Reliablity Engineer"
 company = "NCR on the SRE Team"
->>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 location = "FT Worth, TX"
 startdate = "August 2015"
 enddate = "October 2020"
@@ -55,12 +47,8 @@ points = [
 ]
 
 [[experiences]]
-position = "Software Quality Engineer "
-<<<<<<< HEAD
+position = "Software Quality Engineer"
 company = "NCR on the Mobile Applications Team"
-=======
-company = "NCR on the Mobile Apps Team"
->>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 location = "FT Worth, TX"
 startdate = "February 2011"
 enddate = "August 2015"
@@ -74,23 +62,6 @@ points = [
   "Managed the Quality Analysis teams during development phases."
 ]
 
-<<<<<<< HEAD
-[[experiences]]
-position = "Tier 3 Support Technician"
-company = "Radiant Systems on the Support Team"
-location = "FT Worth, TX"
-startdate = "June 2006"
-enddate = "February 2011"
-points = [
-  "Triaged and maintained escalated support incidents.",
-  "Wrote and maintained SQL database scripts and procedures to support the product needs.",
-  "Wrote enhancement requests to the product development teams to handle customer support incidents.",
-  "Managed and wrote processes to handle customer support needs."
-]
-
-
-=======
->>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
 [[skills]]
 name = "Skills"
 points = [
@@ -109,8 +80,4 @@ points = [
   "Infrastructure migration to azure cloud using ARM templates.",
   "Development of software deployment processes and stratigies.",
   "Experience using monitoring tools such as Azure Application Insights, Zabbix, Sensu and New Relic."
-<<<<<<< HEAD
 ]
-=======
-]
->>>>>>> df0394740dcdf0e6f23010287d69e73d36e7bc1f
