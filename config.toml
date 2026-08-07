@@ -1,4 +1,4 @@
 title = "Danielle's Resume"
 baseURL = "https://dswyhart.github.io"
-theme = "simple-resume"
+publishDir = "docs"
 disableKinds = ["taxonomy", "term"]
