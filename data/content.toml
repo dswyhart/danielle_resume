@@ -2,7 +2,7 @@ name = "Danielle Swyhart"
 email = "swyhartresume@hotmail.com"
 phone = "8172390307"
 github = "dswyhart"
-summary = "I am a Senior level IT professional with an applications operations background focused on cloud technologies using Devops and SRE methodologies. I am focused on reaching any organization's strategic vision and goals while providing a stable, cost efficient, scalable, and fully automated infrastructure and software stack."
+summary = "Senior Site Reliability Engineer with experience leading CI/CD modernization, Terraform-based AWS infrastructure, ETL optimization, and application migration work for enterprise cloud platforms. I build secure, scalable, cost-efficient systems and delivery pipelines that improve reliability, release safety, and operational resilience."
 
 [[schools]]
 name = "Courses Taken"
@@ -15,15 +15,16 @@ location = "Remote"
 startdate = "April 2021"
 enddate = "Current"
 points = [
-  "Federal Government - Centers for Medicare & Medicaid Services (CMS) Cloud Services:",
-  "Joined a product team to develop, document, write Terraform IaC, and deploy monitoring solutions to monitor a Temporal platform running on Amazon Elastic Kubernetes (EKS).",
-  "Developed, documented, and trained the staff on Incident Management process and exercises.",
-  "Wrote Splunk Dashboards and search queries using The Splunk Search Processing Language (SPL).",
-  "State Government - California Department of Technology (CDT):",
-  "Qualitative research interviews to determine system stability and scalability.",
-  "Research and data analysis.",
-  "Systems stability and scalability evaluation.",
-  "Write Assessement reports for the project oversight commitee."
+  "Since April 2022, led cross-repository migration work for the CMS CCXP program from legacy MOSS to Greenfield v4 infrastructure across frontend, backend, ETL, data, and shared platform services.",
+  "Architected a shared Jenkins and Groovy CI library spanning 8+ repositories, standardizing delivery workflows, reusable deployment functions, and faster pipeline onboarding.",
+  "Implemented semantic-version release automation, pre-build PR merge validation, blue-green deployments, and Akamai cache-purge automation to improve release safety and reduce downtime.",
+  "Standardized Node.js runtime upgrades from 18 through 24 across frontend, backend, and pipeline ecosystems, reducing technical debt and improving build stability.",
+  "Built CCXP Greenfield AWS foundations in Terraform across DEV, TEST, IMPL, and PROD with reusable modules for KMS, CloudWatch, ACM, SQS, SNS, Lambda, ECS, RDS, S3, and EventBridge.",
+  "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16, including read-only endpoint support and production right-sizing for improved resiliency and performance.",
+  "Designed a parallelized Speedy ETL architecture and automated Greenfield migration for 15+ ETL pipelines across DEV, TEST, IMPL, and PROD.",
+  "Replaced log-based Lambda health checks with database-driven status monitoring, timeout restart handling, and fatal-log detection to improve ETL reliability.",
+  "Established production-ready CI/CD for the React client, Single-SPA root-config, import-map workflows, SonarQube, and New Relic browser and server observability.",
+  "Strengthened platform security with TruffleHog secret scanning, cross-account Assume Role adoption, IAM hardening, KMS rotation, and deployment guardrails across 8+ repositories."
 ]
 
 [[experiences]]
@@ -65,19 +66,16 @@ points = [
 [[skills]]
 name = "Skills"
 points = [
-  "SaaS",
-  "Cloud IaC",
-  "Full Software Stack administration.",
-  "Designing, Coding, Testing and Deploying of Software to automate manual operational tasks.",
-  "Azure Infrastructure scripting, deploying, and administration.",
-  "Strong Communication and Collaboration Skills.",
-  "Incident Management",
-  "Customer-Centric / Customer-First Mindset and Dedication.",
-  "DevOps/SRE Tools and Technologies (jenkins, chef, artifactory, rundeck, ARM etc.)",
-  "Experience with full administration for all versions of Windows and CentOS Linux.",
-  "SQL DBA and Development using MS SQL Server and PostgreSQL.",
-  "Data center migrations using VMware and Zerto.",
-  "Infrastructure migration to azure cloud using ARM templates.",
-  "Development of software deployment processes and stratigies.",
-  "Experience using monitoring tools such as Azure Application Insights, Zabbix, Sensu and New Relic."
+  "Site Reliability Engineering",
+  "CI/CD Architecture and Release Automation",
+  "Terraform and AWS Infrastructure as Code",
+  "Jenkins, Groovy, GitHub Actions, SonarQube",
+  "AWS ECS, Lambda, RDS, S3, CloudWatch, EventBridge, SNS, SQS, ACM, KMS",
+  "Blue-Green Deployments and Akamai Cache Purge Automation",
+  "Node.js Runtime Upgrades and Modernization",
+  "ETL Pipeline Engineering and Performance Optimization",
+  "PostgreSQL Administration and Upgrade Planning",
+  "Observability with New Relic, Splunk, ELK, and CloudWatch",
+  "Security Hardening, Secret Scanning, IAM, and Compliance Controls",
+  "Windows, Linux, Azure, and Full Software Stack Administration"
 ]
