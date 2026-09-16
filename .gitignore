@@ -1,4 +1,4 @@
-public
 .DS_Store
+_site
 deploy.sh
 publish_to_ghpages.sh
