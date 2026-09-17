@@ -8,12 +8,34 @@
 (function () {
   "use strict";
 
-  // How many bullets survive per role, by density. Index matches RESUME.experiences.
+  /*
+   * How many bullets survive per role, by density. Index matches
+   * RESUME.experiences.
+   *
+   * `concise` is the resume you actually send: hard caps that keep it to a
+   * single page. `full` is the complete record, so it uses Infinity rather
+   * than a number -- the source material grows over time and a fixed cap would
+   * silently hide the newest work.
+   *
+   * A 0 means the role collapses to its `condensed` prose line, which is why
+   * the 2011-2015 QA role reads as one line in every variant.
+   */
   var BULLET_BUDGET = {
     concise: [7, 5, 0],
-    full: [10, 8, 0]
+    full: [Infinity, Infinity, 0]
   };
-  var SKILL_BUDGET = { concise: 12, full: 16 };
+  var SKILL_BUDGET = { concise: 12, full: Infinity };
+
+  /*
+   * Most bullets a single theme may occupy in one role.
+   *
+   * Without this, relevance ranking alone lets one strong theme swamp a short
+   * list: the SRE variant filled three of seven slots with resilience work and
+   * two with database work, pushing out the flagship migration entirely. The
+   * cap keeps a concise resume reading across the breadth of the role, and it
+   * holds as more source material is added over time.
+   */
+  var THEME_CAP = { concise: 2, full: Infinity };
 
   function weightFor(item, jobId) {
     return (item.w && typeof item.w[jobId] === "number") ? item.w[jobId] : 0;
@@ -39,12 +61,26 @@
    *                 recruiter scanning the first line should hit the skills
    *                 that matter most for the role they are hiring for.
    */
-  function rank(items, jobId, limit, order) {
-    var kept = items
+  function rank(items, jobId, limit, order, themeCap) {
+    var ranked = items
       .map(function (item, index) { return { item: item, index: index }; })
       .filter(function (d) { return weightFor(d.item, jobId) > 0; })
-      .sort(byWeight(jobId))
-      .slice(0, limit);
+      .sort(byWeight(jobId));
+
+    // Walk the ranking rather than slicing it, so a theme that has used up its
+    // allowance is skipped and its slot goes to the next-best other theme.
+    var cap = themeCap || Infinity;
+    var perTheme = {};
+    var kept = [];
+    for (var i = 0; i < ranked.length && kept.length < limit; i++) {
+      var theme = ranked[i].item.t;
+      if (theme) {
+        var used = perTheme[theme] || 0;
+        if (used >= cap) continue;
+        perTheme[theme] = used + 1;
+      }
+      kept.push(ranked[i]);
+    }
 
     if (order !== "relevance") {
       kept.sort(function (a, b) { return a.index - b.index; });
@@ -75,7 +111,8 @@
       if (exp.condense && !limit) {
         out.summaryLine = exp.condensed;
       } else {
-        out.bullets = rank(exp.points, jobId, limit || exp.points.length, "authored");
+        out.bullets = rank(exp.points, jobId, limit || exp.points.length, "authored",
+                          THEME_CAP[density] || THEME_CAP.concise);
       }
       return out;
     });

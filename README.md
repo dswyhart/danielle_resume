@@ -16,8 +16,9 @@ then builds a formatted, ATS-readable PDF of exactly what is on screen.
 | Cloud Infrastructure Engineer | Terraform, AWS, and Azure infrastructure as code |
 | Platform Engineer | Shared services, standardization, developer experience |
 
-A **Concise / Full** toggle controls how many bullets survive: *Concise* keeps the strongest few
-per role and aims at a single page, *Full* prints the complete history.
+A **Concise / Full** toggle controls how many bullets survive. *Concise* is the resume you
+actually send: hard per-role caps that keep every job type to a single page. *Full* is the
+complete record and is uncapped, so newly added source material always shows up somewhere.
 
 ## Stack
 
@@ -40,7 +41,13 @@ assets/js/tailor.js        picks and orders content for the selected job type
 assets/js/pdf.js           builds the pdfmake document definition
 assets/js/app.js           UI wiring and on-screen rendering
 vendor/pdfmake.min.js      pdfmake 0.2.12 (MIT)
+vendor/pdfmake-standard-fonts.js  Helvetica metrics for the PDF standard 14
+src/                       raw source material the resume is written from
 ```
+
+`src/` holds the original CCXP contribution notes (Markdown and Word). It is not published —
+the Pages workflow copies only `index.html`, `CNAME`, `assets/`, and `vendor/`. Keep it as the
+record of where bullets came from, and as the pool to draw from when adding more.
 
 ## Editing content
 
@@ -50,6 +57,7 @@ type:
 ```js
 {
   text: "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16 ...",
+  t: "database",
   w: { sre: 10, devops: 5, cloud: 9, platform: 5 }
 }
 ```
@@ -57,12 +65,26 @@ type:
 Weights run 0–10; `0` drops the item from that variant entirely. Higher-weighted items win the
 limited bullet slots in *Concise* mode.
 
+`t` is the bullet's theme, and it matters more than it looks. Relevance ranking on its own lets
+one strong theme swamp a short list — the SRE variant once filled three of seven slots with
+resilience work and two with database work, pushing out the flagship migration bullet entirely.
+`THEME_CAP` in `assets/js/tailor.js` allows at most two bullets per theme in *Concise* mode, so
+a concise resume reads across the breadth of the role. Give a new bullet an existing theme when
+it belongs to one; invent a new theme only when it genuinely stands apart.
+
 To add a job type, add an entry to `jobTypes` (with an `id`, `label`, `blurb`, `title`, and
 `summary`) and add that `id` to the `w` map of any bullet or skill that should appear in it.
 Nothing else needs to change — the UI and the PDF builder both read from the data.
 
 Per-role bullet budgets live in `BULLET_BUDGET` at the top of `assets/js/tailor.js`. A role with
-`condense: true` collapses to its `condensed` prose line whenever its budget is `0`.
+`condense: true` collapses to its `condensed` prose line whenever its budget is `0` — which is
+why the 2011–2015 QA role reads as one line in every variant. `full` uses `Infinity` rather than
+a number on purpose: a fixed cap would silently hide the newest work as the source material
+grows.
+
+After changing content or weights, check every variant still paginates the way you expect —
+*Concise* should be one page and *Full* two for all four job types. One variant quietly spilling
+onto an extra page is the usual failure, and it only shows up when you compare them together.
 
 ## Running locally
 
