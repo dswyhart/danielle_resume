@@ -1,7 +1,7 @@
 # Deploys the static resume site to GitHub Pages.
 #
-# There is no build step: the repository root IS the site. Hugo was removed in
-# favor of plain HTML, CSS, and JavaScript, so the workflow just uploads the
+# There is no build step: the repository root IS the site. 
+# plain HTML, CSS, and JavaScript, so the workflow just uploads the
 # checkout as the Pages artifact.
 name: Deploy resume site to Pages
 
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Stage site
         run: |
@@ -39,7 +39,7 @@ jobs:
           cp -R index.html CNAME assets vendor _site/
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
@@ -52,4 +52,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
