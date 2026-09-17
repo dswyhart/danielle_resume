@@ -81,6 +81,29 @@
       }
     ];
 
+    if (exp.engagement) {
+      stack.push({
+        columns: [
+          {
+            width: "*",
+            text: [
+              { text: exp.engagement.position, bold: true, fontSize: 9.5, color: MUTED },
+              { text: "  \u00b7  " + exp.engagement.client, fontSize: 9, color: MUTED }
+            ]
+          },
+          {
+            width: "auto",
+            text: exp.engagement.dates,
+            fontSize: 8.5,
+            color: MUTED,
+            alignment: "right",
+            margin: [8, 0, 0, 0]
+          }
+        ],
+        margin: [0, 2, 0, 0]
+      });
+    }
+
     if (exp.summaryLine) {
       stack.push({ text: exp.summaryLine, style: "body", margin: [0, 4, 0, 0] });
     } else if (exp.bullets.length) {

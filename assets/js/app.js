@@ -202,6 +202,17 @@
       row.appendChild(el("p", "meta", exp.dates));
       article.appendChild(row);
 
+      // A concurrent contract title under the same employer, when there is one.
+      if (exp.engagement) {
+        var eng = el("div", "engagement-row");
+        var label = el("p", "engagement");
+        label.appendChild(el("strong", null, exp.engagement.position));
+        label.appendChild(document.createTextNode(" \u00b7 " + exp.engagement.client));
+        eng.appendChild(label);
+        eng.appendChild(el("p", "meta", exp.engagement.dates));
+        article.appendChild(eng);
+      }
+
       if (exp.summaryLine) {
         article.appendChild(el("p", "condensed", exp.summaryLine));
       } else {

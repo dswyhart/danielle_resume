@@ -58,6 +58,15 @@ window.RESUME = {
       location: "Remote",
       startdate: "April 2021",
       enddate: "Present",
+      // Substantially all of the bullets below are contract work, performed
+      // under a different title than the one held at Nava. Both are real and
+      // concurrent: still an SRE for Nava, DevOps Engineer on the contract.
+      engagement: {
+        position: "DevOps Engineer",
+        client: "CMS Care Compare Experience Platform (medicare.gov)",
+        startdate: "December 2022",
+        enddate: "Present"
+      },
       points: [
         {
           text: "Led cross-repository migration of the CMS CCXP program from legacy MOSS to Greenfield v4 infrastructure, spanning frontend, backend, ETL, data, and shared platform services.",

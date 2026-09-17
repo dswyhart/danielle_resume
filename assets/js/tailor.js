@@ -102,6 +102,13 @@
         company: exp.company,
         location: exp.location,
         dates: exp.startdate + " – " + exp.enddate,
+        engagement: exp.engagement
+          ? {
+              position: exp.engagement.position,
+              client: exp.engagement.client,
+              dates: exp.engagement.startdate + " – " + exp.engagement.enddate
+            }
+          : null,
         bullets: [],
         summaryLine: null
       };
