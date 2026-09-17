@@ -1,4 +1,0 @@
-title = "Danielle's Resume"
-baseURL = "https://dswyhart.github.io"
-publishDir = "docs"
-disableKinds = ["taxonomy", "term"]

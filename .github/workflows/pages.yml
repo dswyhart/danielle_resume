@@ -1,61 +1,48 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
-name: Deploy Hugo site to Pages
+# Deploys the static resume site to GitHub Pages.
+#
+# There is no build step: the repository root IS the site. Hugo was removed in
+# favor of plain HTML, CSS, and JavaScript, so the workflow just uploads the
+# checkout as the Pages artifact.
+name: Deploy resume site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main", "update"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: ["main"]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
-# Default to bash
 defaults:
   run:
     shell: bash
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      HUGO_VERSION: 0.164.0
     steps:
-      - name: Install Hugo CLI
-        run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v5
-      - name: Build with Hugo
-        env:
-          # For maximum backward compatibility with Hugo modules
-          HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
+
+      - name: Stage site
         run: |
-          hugo \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+          mkdir -p _site
+          cp -R index.html CNAME assets vendor _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./_site
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
