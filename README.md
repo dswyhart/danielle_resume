@@ -45,9 +45,16 @@ vendor/pdfmake-standard-fonts.js  Helvetica metrics for the PDF standard 14
 src/                       raw source material the resume is written from
 ```
 
-`src/` holds the original CCXP contribution notes (Markdown and Word). It is not published —
-the Pages workflow copies only `index.html`, `CNAME`, `assets/`, and `vendor/`. Keep it as the
-record of where bullets came from, and as the pool to draw from when adding more.
+`src/` holds the raw material bullets are written from — currently the CCXP contribution notes
+in Markdown and Word. It is not published: the Pages workflow copies only `index.html`, `CNAME`,
+`assets/`, and `vendor/`. Keep it as the record of where bullets came from, and as the pool to
+draw from when adding more.
+
+**Not every source belongs here.** The healthcare.gov bullets were written from a performance
+review that also carried peer feedback about three named colleagues, and that document was
+deliberately left out. `src/` lives in a repository that publishes a public site, so keep
+third-party personnel information, client-confidential material, and anything carrying someone
+else's name out of it. Write the bullets from such a source, then discard it.
 
 ## Editing content
 
@@ -119,9 +126,9 @@ When an engagement's `position` matches the employer's, the sub-block shows only
 dates. Repeating the title against a narrower date range reads as a mistake even when it is
 accurate.
 
-An engagement with an empty `points` array still renders its header, so the chronology stays
-complete while accomplishments for it are still being gathered. Roles without `engagements`
-keep their own top-level `points`.
+An engagement with an empty `points` array still renders its header, so adding a contract you
+have not yet written bullets for keeps the chronology complete instead of dropping the role
+entirely. Roles without `engagements` keep their own top-level `points`.
 
 Keep the `client` string short. It shares one line with the right-aligned date range, and a
 long one wraps the dates onto a second line — which looks ragged and costs vertical space that
@@ -131,10 +138,22 @@ the concise page budget cannot spare.
 
 Budgets live on each entry as `budget: { concise, full }` — on a role, or on an individual
 engagement — rather than in a positional array, so adding a role or engagement cannot silently
-shift another one's cap. A role with `condense: true` and a concise budget of `0` collapses to
-its `condensed` prose line, which is why the 2011–2015 QA role reads as one line in every
-variant. `full` uses `Infinity` on purpose: a fixed cap would silently hide the newest work as
-the source material grows.
+shift another one's cap.
+
+An omitted budget means different things depending on the entry, and the difference matters:
+
+| Entry | No `budget` key | Effect |
+|-------|-----------------|--------|
+| ordinary role or engagement | `Infinity` | every bullet with a non-zero weight is kept |
+| role with `condense: true` | `0` | collapses to its `condensed` prose line |
+
+So a `condense` role collapses by default; give it a positive budget only when you want it to
+print bullets after all. This asymmetry is deliberate — an earlier version defaulted everything
+to `Infinity`, which made a condensed role print its entire bullet list unless someone
+remembered to write `concise: 0`.
+
+`full` uses `Infinity` on purpose: a fixed cap would silently hide the newest work as the source
+material grows.
 
 ## Checking your changes
 
@@ -153,6 +172,28 @@ the browser console:
 
 Expect **1 page for every `concise`** and **2 for every `full`**. Anything else means a budget
 needs tuning.
+
+Two pages for *Full* is fine, but check *where* the break lands. `pdf.js` deliberately allows a
+role to split across pages — a 24-bullet role has to — which means a role or engagement header
+can end up stranded at the foot of a page with its bullets overleaf. To measure that:
+
+```js
+['sre','devops','cloud','platform'].forEach(id => {
+  const nodes = [];
+  const dd = ResumePdf.buildDocDefinition(Tailor.tailor(id, 'full'));
+  dd.pageBreakBefore = n => {
+    const kind = n.ul ? 'UL' : (n.columns ? 'HEADER' : null);
+    if (kind) nodes.push({ page: n.startPosition && n.startPosition.pageNumber, kind });
+    return false;
+  };
+  pdfMake.createPdf(dd).getBuffer(() => console.log(id,
+    nodes.filter((n, i) => n.kind === 'HEADER' && nodes[i + 1] &&
+      nodes[i + 1].kind === 'UL' && nodes[i + 1].page > n.page).length, 'orphaned header(s)'));
+});
+```
+
+Expect **0** for every variant. If one appears, wrap that header together with its first bullet
+in an `unbreakable: true` stack rather than making the whole role unbreakable.
 
 > **Reload properly first.** The scripts are served without cache headers, so a browser will
 > happily keep running a stale `tailor.js` or `pdf.js` after you edit them — the numbers then
