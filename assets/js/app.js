@@ -202,24 +202,35 @@
       row.appendChild(el("p", "meta", exp.dates));
       article.appendChild(row);
 
-      // A concurrent contract title under the same employer, when there is one.
-      if (exp.engagement) {
-        var eng = el("div", "engagement-row");
+      function engagementHeader(eng) {
+        var row = el("div", "engagement-row");
         var label = el("p", "engagement");
-        label.appendChild(el("strong", null, exp.engagement.position));
-        label.appendChild(document.createTextNode(" \u00b7 " + exp.engagement.client));
-        eng.appendChild(label);
-        eng.appendChild(el("p", "meta", exp.engagement.dates));
-        article.appendChild(eng);
+        label.appendChild(el("strong", null, eng.position));
+        label.appendChild(document.createTextNode(" \u00b7 " + eng.client));
+        row.appendChild(label);
+        row.appendChild(el("p", "meta", eng.dates));
+        return row;
       }
 
-      if (exp.summaryLine) {
+      function bulletList(bullets) {
+        var ul = el("ul");
+        bullets.forEach(function (b) { ul.appendChild(el("li", null, b)); });
+        return ul;
+      }
+
+      if (exp.engagements && exp.engagements.length) {
+        exp.engagements.forEach(function (eng) {
+          var block = el("div", "engagement-block");
+          block.appendChild(engagementHeader(eng));
+          if (eng.bullets.length) block.appendChild(bulletList(eng.bullets));
+          article.appendChild(block);
+        });
+      } else if (exp.summaryLine) {
         article.appendChild(el("p", "condensed", exp.summaryLine));
       } else {
-        var ul = el("ul");
-        exp.bullets.forEach(function (b) { ul.appendChild(el("li", null, b)); });
-        article.appendChild(ul);
+        article.appendChild(bulletList(exp.bullets));
       }
+
       section.appendChild(article);
     });
   }

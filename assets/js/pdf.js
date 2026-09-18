@@ -81,38 +81,44 @@
       }
     ];
 
-    if (exp.engagement) {
-      stack.push({
+    function engagementHeader(eng) {
+      return {
         columns: [
           {
             width: "*",
             text: [
-              { text: exp.engagement.position, bold: true, fontSize: 9.5, color: MUTED },
-              { text: "  \u00b7  " + exp.engagement.client, fontSize: 9, color: MUTED }
+              { text: eng.position, bold: true, fontSize: 9.5, color: MUTED },
+              { text: "  \u00b7  " + eng.client, fontSize: 9, color: MUTED }
             ]
           },
           {
             width: "auto",
-            text: exp.engagement.dates,
+            text: eng.dates,
             fontSize: 8.5,
             color: MUTED,
             alignment: "right",
             margin: [8, 0, 0, 0]
           }
         ],
-        margin: [0, 2, 0, 0]
-      });
+        margin: [0, 5, 0, 0]
+      };
     }
 
-    if (exp.summaryLine) {
+    function bulletList(bullets) {
+      return { ul: bullets, style: "body", margin: [0, 4, 0, 0], markerColor: ACCENT };
+    }
+
+    if (exp.engagements && exp.engagements.length) {
+      exp.engagements.forEach(function (eng) {
+        stack.push(engagementHeader(eng));
+        // pdfmake rejects an empty `ul`, and an engagement may legitimately
+        // have no bullets yet.
+        if (eng.bullets.length) stack.push(bulletList(eng.bullets));
+      });
+    } else if (exp.summaryLine) {
       stack.push({ text: exp.summaryLine, style: "body", margin: [0, 4, 0, 0] });
     } else if (exp.bullets.length) {
-      stack.push({
-        ul: exp.bullets,
-        style: "body",
-        margin: [0, 4, 0, 0],
-        markerColor: ACCENT
-      });
+      stack.push(bulletList(exp.bullets));
     }
 
     // Keep a role header from being orphaned at the foot of a page.

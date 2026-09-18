@@ -9,22 +9,22 @@
   "use strict";
 
   /*
-   * How many bullets survive per role, by density. Index matches
-   * RESUME.experiences.
-   *
-   * `concise` is the resume you actually send: hard caps that keep it to a
-   * single page. `full` is the complete record, so it uses Infinity rather
-   * than a number -- the source material grows over time and a fixed cap would
-   * silently hide the newest work.
-   *
-   * A 0 means the role collapses to its `condensed` prose line, which is why
-   * the 2011-2015 QA role reads as one line in every variant.
+   * Per-entry bullet budgets now live on the data (`budget: { concise, full }`)
+   * rather than in a positional array here, so adding a role or engagement
+   * cannot silently shift another one's cap. A concise budget of 0 on a role
+   * marked `condense: true` collapses it to its `condensed` prose line, which
+   * is why the 2011-2015 QA role reads as one line in every variant.
    */
-  var BULLET_BUDGET = {
-    concise: [7, 5, 0],
-    full: [Infinity, Infinity, 0]
-  };
   var SKILL_BUDGET = { concise: 12, full: Infinity };
+
+  function budgetFor(entry, density) {
+    var limit = (entry.budget || {})[density];
+    return typeof limit === "number" ? limit : Infinity;
+  }
+
+  function dateRange(startdate, enddate) {
+    return startdate + " \u2013 " + enddate;
+  }
 
   /*
    * Most bullets a single theme may occupy in one role.
@@ -93,34 +93,46 @@
     var job = resume.jobTypes.filter(function (j) { return j.id === jobId; })[0];
     if (!job) throw new Error("Unknown job type: " + jobId);
 
-    var budget = BULLET_BUDGET[density] || BULLET_BUDGET.concise;
+    function bulletsFor(entry) {
+      return rank(entry.points || [], jobId, budgetFor(entry, density), "authored",
+                  THEME_CAP[density] || THEME_CAP.concise);
+    }
 
-    var experiences = resume.experiences.map(function (exp, i) {
-      var limit = budget[i];
+    var experiences = resume.experiences.map(function (exp) {
       var out = {
         position: exp.position,
         company: exp.company,
         location: exp.location,
-        dates: exp.startdate + " – " + exp.enddate,
-        engagement: exp.engagement
-          ? {
-              position: exp.engagement.position,
-              client: exp.engagement.client,
-              dates: exp.engagement.startdate + " – " + exp.engagement.enddate
-            }
-          : null,
+        dates: dateRange(exp.startdate, exp.enddate),
+        engagements: [],
         bullets: [],
         summaryLine: null
       };
 
-      // A role marked `condense` collapses to a single prose line unless the
-      // density explicitly buys it a bullet budget.
-      if (exp.condense && !limit) {
+      // A role marked `condense` collapses to one prose line when its budget
+      // for this density is 0.
+      if (exp.condense && budgetFor(exp, density) === 0) {
         out.summaryLine = exp.condensed;
-      } else {
-        out.bullets = rank(exp.points, jobId, limit || exp.points.length, "authored",
-                          THEME_CAP[density] || THEME_CAP.concise);
+        return out;
       }
+
+      if (exp.engagements) {
+        // Each engagement is ranked against its own budget, so a long contract
+        // cannot crowd out a shorter one. An engagement with no bullets still
+        // renders its header, keeping the chronology complete.
+        out.engagements = exp.engagements
+          .map(function (eng) {
+            return {
+              position: eng.position,
+              client: eng.client,
+              dates: dateRange(eng.startdate, eng.enddate),
+              bullets: bulletsFor(eng)
+            };
+          });
+      } else {
+        out.bullets = bulletsFor(exp);
+      }
+
       return out;
     });
 

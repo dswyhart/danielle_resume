@@ -58,135 +58,186 @@ window.RESUME = {
       location: "Remote",
       startdate: "April 2021",
       enddate: "Present",
-      // Substantially all of the bullets below are contract work, performed
-      // under a different title than the one held at Nava. Both are real and
-      // concurrent: still an SRE for Nava, DevOps Engineer on the contract.
-      engagement: {
-        position: "DevOps Engineer",
-        client: "CMS Care Compare Experience Platform (medicare.gov)",
-        startdate: "December 2022",
-        enddate: "Present"
-      },
-      points: [
+      /*
+       * Nava is one employer with concurrent client engagements, each carrying
+       * its own title, dates, and bullets. `position` above is the title held
+       * with Nava itself and still current; the engagements below are the
+       * contracts worked under it, newest first.
+       *
+       * `budget` is per-entry rather than a positional array in tailor.js, so
+       * adding an engagement cannot silently shift another one's cap.
+       */
+      engagements: [
         {
-          text: "Led cross-repository migration of the CMS CCXP program from legacy MOSS to Greenfield v4 infrastructure, spanning frontend, backend, ETL, data, and shared platform services.",
-          t: "migration",
-          w: { sre: 10, devops: 9, cloud: 10, platform: 10 }
+          position: "DevOps Engineer",
+          client: "medicare.gov/care-compare \u2014 FedHealth portfolio",
+          startdate: "August 2022",
+          enddate: "Present",
+          // 5, not 6: a third engagement header tipped the SRE concise variant
+          // onto a second page.
+          budget: { concise: 5, full: Infinity },
+          points: [
+            {
+              text: "Led cross-repository migration of the CMS CCXP program from legacy MOSS to Greenfield v4 infrastructure, spanning frontend, backend, ETL, data, and shared platform services.",
+              t: "migration",
+              w: { sre: 10, devops: 9, cloud: 10, platform: 10 }
+            },
+            {
+              text: "Architected a shared Jenkins and Groovy CI library spanning 8+ repositories, standardizing delivery workflows, reusable deployment functions, and pipeline onboarding.",
+              t: "cicd",
+              w: { sre: 6, devops: 10, cloud: 4, platform: 9 }
+            },
+            {
+              text: "Implemented semantic-version release automation, pre-build PR merge validation, blue-green deployments, and Akamai cache-purge automation, improving release safety and reducing deployment downtime.",
+              t: "cicd",
+              w: { sre: 8, devops: 10, cloud: 4, platform: 6 }
+            },
+            {
+              text: "Engineered atomic deployment sequencing for the microfrontend root config, publishing the shell bundle, then import maps, then index.html so users never loaded a mismatched asset set during cutover.",
+              t: "cicd",
+              w: { sre: 8, devops: 9, cloud: 3, platform: 9 }
+            },
+            {
+              text: "Implemented dynamic Akamai cache purging in Jenkins for full, per-file, and path-targeted invalidation, resolving a production incident caused by stale cached content.",
+              t: "cicd",
+              w: { sre: 9, devops: 9, cloud: 4, platform: 6 }
+            },
+            {
+              text: "Standardized Node.js runtime upgrades from 18 through 24 across frontend, backend, and pipeline ecosystems, reducing technical debt and improving build stability.",
+              t: "modernization",
+              w: { sre: 4, devops: 7, cloud: 3, platform: 9 }
+            },
+            {
+              text: "Built CCXP Greenfield AWS foundations in Terraform across DEV, TEST, IMPL, and PROD, with reusable modules for KMS, CloudWatch, ACM, SQS, SNS, Lambda, ECS, RDS, S3, and EventBridge.",
+              t: "iac",
+              w: { sre: 7, devops: 7, cloud: 10, platform: 8 }
+            },
+            {
+              text: "Refactored Terraform child modules to eliminate hardcoded account numbers, ARNs, CIDR blocks, and regions, making the full infrastructure deployable into a new AWS account without code changes.",
+              t: "iac",
+              w: { sre: 5, devops: 7, cloud: 10, platform: 9 }
+            },
+            {
+              text: "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16, adding read-only endpoint support and production right-sizing to improve resiliency and performance.",
+              t: "database",
+              w: { sre: 10, devops: 5, cloud: 9, platform: 5 }
+            },
+            {
+              text: "Developed the platform's PostgreSQL major-version upgrade methodology, covering snapshot-based dry runs, Aurora query plan baselines via apg_plan_mgmt, cross-version performance comparison, and a documented rollback plan.",
+              t: "database",
+              w: { sre: 8, devops: 4, cloud: 8, platform: 4 }
+            },
+            {
+              text: "Enabled CloudWatch Container Insights through Terraform with per-environment toggles, surfacing container CPU, memory, and network metrics for the ECS clusters.",
+              t: "observability",
+              w: { sre: 9, devops: 4, cloud: 8, platform: 5 }
+            },
+            {
+              text: "Designed a parallelized Speedy ETL architecture and automated the Greenfield migration of 15+ ETL pipelines across DEV, TEST, IMPL, and PROD.",
+              t: "etl",
+              w: { sre: 7, devops: 6, cloud: 8, platform: 8 }
+            },
+            {
+              text: "Replaced log-based Lambda health checks with database-driven status monitoring, timeout restart handling, and fatal-log detection, improving ETL reliability.",
+              t: "etl",
+              w: { sre: 10, devops: 4, cloud: 6, platform: 5 }
+            },
+            {
+              text: "Established production-ready CI/CD for the React client, Single-SPA root-config, and import-map workflows, with SonarQube quality gates and New Relic browser and server observability.",
+              t: "modernization",
+              w: { sre: 8, devops: 9, cloud: 4, platform: 9 }
+            },
+            {
+              text: "Strengthened platform security with TruffleHog secret scanning, cross-account Assume Role adoption, IAM hardening, KMS rotation, and deployment guardrails across 8+ repositories.",
+              t: "security",
+              w: { sre: 6, devops: 7, cloud: 9, platform: 8 }
+            },
+            {
+              text: "Triaged a critical CVSS 9.4 dependency CVE, established that the vulnerable component was bundled but never invoked, and closed the finding with a formal attestation to CMS.",
+              t: "security",
+              w: { sre: 7, devops: 7, cloud: 6, platform: 6 }
+            },
+            {
+              text: "Led the 2026 Risk Assessment epic, owning the pre-assessment compliance deliverables including the Configuration Management Plan, Privacy Impact Assessment, and System Design Documents.",
+              t: "compliance",
+              w: { sre: 6, devops: 5, cloud: 5, platform: 8 }
+            },
+            {
+              text: "Authored Terraform for AWS Fault Injection Service experiments, giving the team controlled chaos engineering scenarios to run against production-like environments.",
+              t: "resilience",
+              w: { sre: 10, devops: 5, cloud: 9, platform: 6 }
+            },
+            {
+              text: "Onboarded the platform into AWS Resilience Hub, building a proof of concept and evaluating Fault Injection Service integration to establish a resilience scoring baseline.",
+              t: "resilience",
+              w: { sre: 9, devops: 4, cloud: 9, platform: 5 }
+            },
+            {
+              text: "Served as Chaos Master for the 2026 Medicare Game Day, designing and running a full-scale resilience exercise and streamlining the incident response runbook.",
+              t: "resilience",
+              w: { sre: 10, devops: 5, cloud: 5, platform: 5 }
+            },
+            {
+              text: "Established a Game Day improvements tracker and a recurring incident response practice program so every on-call-eligible engineer gets hands-on paging experience.",
+              t: "resilience",
+              w: { sre: 10, devops: 4, cloud: 3, platform: 7 }
+            },
+            {
+              text: "Authored the platform's on-call, gold image, and database upgrade runbooks, establishing repeatable incident response and maintenance procedures.",
+              t: "docs",
+              w: { sre: 9, devops: 5, cloud: 4, platform: 8 }
+            },
+            {
+              text: "Served as play caller for production releases across the TEST, IMPL, and PROD lifecycle, coordinating multi-provider data refreshes for Medicare beneficiaries.",
+              t: "release",
+              w: { sre: 9, devops: 8, cloud: 3, platform: 5 }
+            },
+            {
+              text: "Led the team's migration from GitHub Enterprise Server to GitHub.com, serving as the CMS point of contact and onboarding 13+ engineers with documented access procedures.",
+              t: "devex",
+              w: { sre: 4, devops: 8, cloud: 3, platform: 10 }
+            }
+          ]
         },
         {
-          text: "Architected a shared Jenkins and Groovy CI library spanning 8+ repositories, standardizing delivery workflows, reusable deployment functions, and pipeline onboarding.",
-          t: "cicd",
-          w: { sre: 6, devops: 10, cloud: 4, platform: 9 }
+          position: "Technical Advisor",
+          client: "California Department of Technology \u2014 State portfolio",
+          startdate: "February 2022",
+          enddate: "August 2022",
+          budget: { concise: 2, full: Infinity },
+          points: [
+          {
+            text: "Created a prioritized roadmap identifying dependencies and the coordination needed to deliver the artifacts, processes, and services in the Critical Service Program vision.",
+            t: "advisory",
+            w: { sre: 5, devops: 5, cloud: 4, platform: 7 }
+          },
+          {
+            text: "Assessed state systems as technical advisor, conducting interviews with state programs to establish scope, dependencies, and readiness.",
+            t: "assessment",
+            w: { sre: 6, devops: 4, cloud: 4, platform: 6 }
+          },
+          {
+            text: "Wrote playbooks and checklists for assessing systems across the state, standardizing how assessments are run.",
+            t: "docs",
+            w: { sre: 7, devops: 5, cloud: 3, platform: 7 }
+          },
+          {
+            text: "Authored assessment documents and delivered reusable assessment frameworks the department continues to use to evaluate state systems.",
+            t: "assessment",
+            w: { sre: 6, devops: 4, cloud: 4, platform: 7 }
+          }
+          ]
         },
         {
-          text: "Implemented semantic-version release automation, pre-build PR merge validation, blue-green deployments, and Akamai cache-purge automation, improving release safety and reducing deployment downtime.",
-          t: "cicd",
-          w: { sre: 8, devops: 10, cloud: 4, platform: 6 }
-        },
-        {
-          text: "Engineered atomic deployment sequencing for the microfrontend root config, publishing the shell bundle, then import maps, then index.html so users never loaded a mismatched asset set during cutover.",
-          t: "cicd",
-          w: { sre: 8, devops: 9, cloud: 3, platform: 9 }
-        },
-        {
-          text: "Implemented dynamic Akamai cache purging in Jenkins for full, per-file, and path-targeted invalidation, resolving a production incident caused by stale cached content.",
-          t: "cicd",
-          w: { sre: 9, devops: 9, cloud: 4, platform: 6 }
-        },
-        {
-          text: "Standardized Node.js runtime upgrades from 18 through 24 across frontend, backend, and pipeline ecosystems, reducing technical debt and improving build stability.",
-          t: "modernization",
-          w: { sre: 4, devops: 7, cloud: 3, platform: 9 }
-        },
-        {
-          text: "Built CCXP Greenfield AWS foundations in Terraform across DEV, TEST, IMPL, and PROD, with reusable modules for KMS, CloudWatch, ACM, SQS, SNS, Lambda, ECS, RDS, S3, and EventBridge.",
-          t: "iac",
-          w: { sre: 7, devops: 7, cloud: 10, platform: 8 }
-        },
-        {
-          text: "Refactored Terraform child modules to eliminate hardcoded account numbers, ARNs, CIDR blocks, and regions, making the full infrastructure deployable into a new AWS account without code changes.",
-          t: "iac",
-          w: { sre: 5, devops: 7, cloud: 10, platform: 9 }
-        },
-        {
-          text: "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16, adding read-only endpoint support and production right-sizing to improve resiliency and performance.",
-          t: "database",
-          w: { sre: 10, devops: 5, cloud: 9, platform: 5 }
-        },
-        {
-          text: "Developed the platform's PostgreSQL major-version upgrade methodology, covering snapshot-based dry runs, Aurora query plan baselines via apg_plan_mgmt, cross-version performance comparison, and a documented rollback plan.",
-          t: "database",
-          w: { sre: 8, devops: 4, cloud: 8, platform: 4 }
-        },
-        {
-          text: "Enabled CloudWatch Container Insights through Terraform with per-environment toggles, surfacing container CPU, memory, and network metrics for the ECS clusters.",
-          t: "observability",
-          w: { sre: 9, devops: 4, cloud: 8, platform: 5 }
-        },
-        {
-          text: "Designed a parallelized Speedy ETL architecture and automated the Greenfield migration of 15+ ETL pipelines across DEV, TEST, IMPL, and PROD.",
-          t: "etl",
-          w: { sre: 7, devops: 6, cloud: 8, platform: 8 }
-        },
-        {
-          text: "Replaced log-based Lambda health checks with database-driven status monitoring, timeout restart handling, and fatal-log detection, improving ETL reliability.",
-          t: "etl",
-          w: { sre: 10, devops: 4, cloud: 6, platform: 5 }
-        },
-        {
-          text: "Established production-ready CI/CD for the React client, Single-SPA root-config, and import-map workflows, with SonarQube quality gates and New Relic browser and server observability.",
-          t: "modernization",
-          w: { sre: 8, devops: 9, cloud: 4, platform: 9 }
-        },
-        {
-          text: "Strengthened platform security with TruffleHog secret scanning, cross-account Assume Role adoption, IAM hardening, KMS rotation, and deployment guardrails across 8+ repositories.",
-          t: "security",
-          w: { sre: 6, devops: 7, cloud: 9, platform: 8 }
-        },
-        {
-          text: "Triaged a critical CVSS 9.4 dependency CVE, established that the vulnerable component was bundled but never invoked, and closed the finding with a formal attestation to CMS.",
-          t: "security",
-          w: { sre: 7, devops: 7, cloud: 6, platform: 6 }
-        },
-        {
-          text: "Led the 2026 Risk Assessment epic, owning the pre-assessment compliance deliverables including the Configuration Management Plan, Privacy Impact Assessment, and System Design Documents.",
-          t: "compliance",
-          w: { sre: 6, devops: 5, cloud: 5, platform: 8 }
-        },
-        {
-          text: "Authored Terraform for AWS Fault Injection Service experiments, giving the team controlled chaos engineering scenarios to run against production-like environments.",
-          t: "resilience",
-          w: { sre: 10, devops: 5, cloud: 9, platform: 6 }
-        },
-        {
-          text: "Onboarded the platform into AWS Resilience Hub, building a proof of concept and evaluating Fault Injection Service integration to establish a resilience scoring baseline.",
-          t: "resilience",
-          w: { sre: 9, devops: 4, cloud: 9, platform: 5 }
-        },
-        {
-          text: "Served as Chaos Master for the 2026 Medicare Game Day, designing and running a full-scale resilience exercise and streamlining the incident response runbook.",
-          t: "resilience",
-          w: { sre: 10, devops: 5, cloud: 5, platform: 5 }
-        },
-        {
-          text: "Established a Game Day improvements tracker and a recurring incident response practice program so every on-call-eligible engineer gets hands-on paging experience.",
-          t: "resilience",
-          w: { sre: 10, devops: 4, cloud: 3, platform: 7 }
-        },
-        {
-          text: "Authored the platform's on-call, gold image, and database upgrade runbooks, establishing repeatable incident response and maintenance procedures.",
-          t: "docs",
-          w: { sre: 9, devops: 5, cloud: 4, platform: 8 }
-        },
-        {
-          text: "Served as play caller for production releases across the TEST, IMPL, and PROD lifecycle, coordinating multi-provider data refreshes for Medicare beneficiaries.",
-          t: "release",
-          w: { sre: 9, devops: 8, cloud: 3, platform: 5 }
-        },
-        {
-          text: "Led the team's migration from GitHub Enterprise Server to GitHub.com, serving as the CMS point of contact and onboarding 13+ engineers with documented access procedures.",
-          t: "devex",
-          w: { sre: 4, devops: 8, cloud: 3, platform: 10 }
+          position: "Site Reliability Engineer",
+          client: "healthcare.gov, ITOPS contract \u2014 FedHealth portfolio",
+          startdate: "April 2021",
+          enddate: "February 2022",
+          budget: { concise: 3, full: Infinity },
+          // No bullets yet: no accomplishments have been supplied for this
+          // engagement and none may be invented. The header still renders, so
+          // the Nava chronology stays complete. Add weighted bullets here.
+          points: []
         }
       ]
     },
@@ -196,6 +247,7 @@ window.RESUME = {
       location: "Fort Worth, TX",
       startdate: "August 2015",
       enddate: "October 2020",
+      budget: { concise: 5, full: Infinity },
       points: [
         {
           text: "Provided 24x7 support, incident management, and subject-matter-expert consultation during system and service interruptions.",
@@ -261,6 +313,7 @@ window.RESUME = {
       startdate: "February 2011",
       enddate: "August 2015",
       condense: true,
+      budget: { concise: 0, full: 0 },
       condensed:
         "Managed quality analysis teams through development phases: designed test environments and scenarios, owned application test plans and cases, coordinated deployment strategies across teams, and drove defect triage and regression testing.",
       points: [
@@ -316,7 +369,9 @@ window.RESUME = {
     { text: "Chaos Engineering and Resilience Testing (AWS FIS, Resilience Hub)", w: { sre: 10, devops: 5, cloud: 8, platform: 5 } },
     { text: "Incident Response, On-Call Programs, and Game Day Exercises", w: { sre: 10, devops: 5, cloud: 3, platform: 6 } },
     { text: "CMS Compliance Deliverables and Risk Assessments", w: { sre: 6, devops: 5, cloud: 5, platform: 8 } },
-    { text: "Release Management and Production Play Calling", w: { sre: 8, devops: 9, cloud: 3, platform: 5 } }
+    { text: "Release Management and Production Play Calling", w: { sre: 8, devops: 9, cloud: 3, platform: 5 } },
+    { text: "Technical Advisory and Systems Assessment", w: { sre: 6, devops: 5, cloud: 5, platform: 8 } },
+    { text: "Roadmapping and Dependency Planning", w: { sre: 5, devops: 5, cloud: 4, platform: 8 } }
   ],
 
   courses: [

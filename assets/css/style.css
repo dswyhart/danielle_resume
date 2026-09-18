@@ -339,3 +339,5 @@ li::marker { color: var(--accent); }
 }
 
 .engagement-row .meta { font-size: 0.88rem; }
+
+.engagement-block + .engagement-block { margin-top: 16px; }

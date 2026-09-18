@@ -76,34 +76,48 @@ To add a job type, add an entry to `jobTypes` (with an `id`, `label`, `blurb`, `
 `summary`) and add that `id` to the `w` map of any bullet or skill that should appear in it.
 Nothing else needs to change — the UI and the PDF builder both read from the data.
 
-### Concurrent titles under one employer
+### Client engagements under one employer
 
-A role may carry an optional `engagement`, for a second concurrent title held under the same
-employer — a contract or client assignment:
+A role may carry `engagements`: concurrent client assignments held under the same employer,
+each with its own title, client, dates, bullets, and budget. Listed newest first.
 
 ```js
-position: "Site Reliability Engineer",      // the title held at the employer
+position: "Site Reliability Engineer",   // the title held with the employer, still current
 company: "Nava Public Benefit Company",
 startdate: "April 2021",
-engagement: {
-  position: "DevOps Engineer",              // the title held on the contract
-  client: "CMS Care Compare Experience Platform (medicare.gov)",
-  startdate: "December 2022",
-  enddate: "Present"
-}
+enddate: "Present",
+engagements: [
+  {
+    position: "DevOps Engineer",         // the title held on this contract
+    client: "medicare.gov/care-compare — FedHealth portfolio",
+    startdate: "August 2022",
+    enddate: "Present",
+    budget: { concise: 5, full: Infinity },
+    points: [ /* weighted bullets, same shape as a role's */ ]
+  }
+]
 ```
 
-It renders as a second line under the employer, with its own date range, in both the page and
-the PDF. Keeping it as one employer block rather than two overlapping entries is both accurate
-and how consulting work is conventionally shown. Roles without an `engagement` are unaffected.
+Each engagement renders as its own sub-block beneath the employer. One employer block with
+several titles is accurate and is how consulting work is conventionally shown; separate
+top-level entries with overlapping dates would read as job-hopping.
+
+An engagement with an empty `points` array still renders its header, so the chronology stays
+complete while accomplishments for it are still being gathered. Roles without `engagements`
+keep their own top-level `points`.
+
+Keep the `client` string short. It shares one line with the right-aligned date range, and a
+long one wraps the dates onto a second line — which looks ragged and costs vertical space that
+the concise page budget cannot spare.
 
 ### Budgets
 
-Per-role bullet budgets live in `BULLET_BUDGET` at the top of `assets/js/tailor.js`. A role with
-`condense: true` collapses to its `condensed` prose line whenever its budget is `0` — which is
-why the 2011–2015 QA role reads as one line in every variant. `full` uses `Infinity` rather than
-a number on purpose: a fixed cap would silently hide the newest work as the source material
-grows.
+Budgets live on each entry as `budget: { concise, full }` — on a role, or on an individual
+engagement — rather than in a positional array, so adding a role or engagement cannot silently
+shift another one's cap. A role with `condense: true` and a concise budget of `0` collapses to
+its `condensed` prose line, which is why the 2011–2015 QA role reads as one line in every
+variant. `full` uses `Infinity` on purpose: a fixed cap would silently hide the newest work as
+the source material grows.
 
 After changing content or weights, check every variant still paginates the way you expect —
 *Concise* should be one page and *Full* two for all four job types. One variant quietly spilling
