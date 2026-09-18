@@ -74,7 +74,7 @@ window.RESUME = {
       engagements: [
         {
           position: "DevOps Engineer",
-          client: "medicare.gov/care-compare \u2014 FedHealth portfolio",
+          client: "medicare.gov/care-compare (CMS) \u2014 FedHealth portfolio",
           startdate: "August 2022",
           enddate: "Present",
           // 5, not 6: a third engagement header tipped the SRE concise variant
@@ -234,14 +234,32 @@ window.RESUME = {
         },
         {
           position: "Site Reliability Engineer",
-          client: "healthcare.gov, ITOPS contract \u2014 FedHealth portfolio",
+          client: "healthcare.gov (CMS), ITOPS contract \u2014 FedHealth portfolio",
           startdate: "April 2021",
           enddate: "February 2022",
-          budget: { concise: 3, full: Infinity },
-          // No bullets yet: no accomplishments have been supplied for this
-          // engagement and none may be invented. The header still renders, so
-          // the Nava chronology stays complete. Add weighted bullets here.
-          points: []
+          budget: { concise: 2, full: Infinity },
+          points: [
+          {
+            text: "Built and operated the service status page covering every Application Development Organization on the healthcare.gov program, giving CMS and partner teams one view of service health.",
+            t: "observability",
+            w: { sre: 10, devops: 6, cloud: 5, platform: 8 }
+          },
+          {
+            text: "Represented the SRE team as technical owner for a new product onboarding, scoping the work and coordinating with the development and automation teams to hit their deliverable dates.",
+            t: "onboarding",
+            w: { sre: 8, devops: 8, cloud: 4, platform: 8 }
+          },
+          {
+            text: "Identified code-base problem areas that risked incomplete or damaged deployments and gave the development team concrete recommendations to prevent them.",
+            t: "cicd",
+            w: { sre: 9, devops: 8, cloud: 3, platform: 6 }
+          },
+          {
+            text: "Reviewed the partner team's code changes throughout the onboarding, raising deployment and reliability concerns ahead of release.",
+            t: "quality",
+            w: { sre: 7, devops: 7, cloud: 3, platform: 7 }
+          }
+          ]
         }
       ]
     },
@@ -251,7 +269,10 @@ window.RESUME = {
       location: "Fort Worth, TX",
       startdate: "August 2015",
       enddate: "October 2020",
-      budget: { concise: 5, full: Infinity },
+      // 3 in concise: this role ended in 2020, and the recent engagements earn
+      // the space. The SRE variant selects longer bullets than the others and
+      // is the one that decides whether concise fits a page.
+      budget: { concise: 3, full: Infinity },
       points: [
         {
           text: "Provided 24x7 support, incident management, and subject-matter-expert consultation during system and service interruptions.",
