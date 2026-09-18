@@ -51,19 +51,29 @@ record of where bullets came from, and as the pool to draw from when adding more
 
 ## Editing content
 
-Everything lives in `assets/js/resume-data.js`. Each bullet and skill carries a weight per job
-type:
+Everything lives in `assets/js/resume-data.js`. Each bullet and each skill carries a weight per
+job type. Bullets also carry a theme; skills do not.
 
 ```js
+// an experience bullet
 {
   text: "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16 ...",
-  t: "database",
-  w: { sre: 10, devops: 5, cloud: 9, platform: 5 }
+  t: "database",                                        // theme (bullets only)
+  w: { sre: 10, devops: 5, cloud: 9, platform: 5 }      // weight per job type
 }
+
+// a skill
+{ text: "PostgreSQL Administration and Upgrade Planning",
+  w: { sre: 9, devops: 4, cloud: 8, platform: 5 } }
 ```
 
 Weights run 0–10; `0` drops the item from that variant entirely. Higher-weighted items win the
 limited bullet slots in *Concise* mode.
+
+Bullets and skills are also **ordered differently** once selected. Bullets are restored to their
+authored order, because they are written to build on each other and read oddly when shuffled.
+Skills stay in relevance order, so a recruiter scanning the first line of the Cloud variant hits
+Terraform rather than whatever happened to be first in the file.
 
 `t` is the bullet's theme, and it matters more than it looks. Relevance ranking on its own lets
 one strong theme swamp a short list — the SRE variant once filled three of seven slots with
@@ -119,13 +129,43 @@ its `condensed` prose line, which is why the 2011–2015 QA role reads as one li
 variant. `full` uses `Infinity` on purpose: a fixed cap would silently hide the newest work as
 the source material grows.
 
-After changing content or weights, check every variant still paginates the way you expect —
-*Concise* should be one page and *Full* two for all four job types. One variant quietly spilling
-onto an extra page is the usual failure, and it only shows up when you compare them together.
+## Checking your changes
+
+One variant quietly spilling onto an extra page is the usual failure here, and it only shows up
+when all eight combinations are compared together. Adding a single engagement header has been
+enough to do it. After changing content, weights, or budgets, open the page and paste this into
+the browser console:
+
+```js
+['sre','devops','cloud','platform'].forEach(id => ['concise','full'].forEach(d => {
+  pdfMake.createPdf(ResumePdf.buildDocDefinition(Tailor.tailor(id, d)))
+    .getBuffer(b => console.log(id, d,
+      (new TextDecoder('latin1').decode(b).match(/\/Type\s*\/Page[^s]/g) || []).length, 'page(s)'));
+}));
+```
+
+Expect **1 page for every `concise`** and **2 for every `full`**. Anything else means a budget
+needs tuning.
+
+> **Reload properly first.** The scripts are served without cache headers, so a browser will
+> happily keep running a stale `tailor.js` or `pdf.js` after you edit them — the numbers then
+> describe the *old* layout and look fine. Hard-reload, or serve on a fresh port
+> (`python3 -m http.server 8801`), and confirm the new code is live before trusting the output.
+
+There is no test suite. `node --check assets/js/*.js` catches syntax errors, though note it does
+*not* catch undefined variables — a stale reference to a removed constant passes `--check` and
+throws only at runtime. Node is needed for that check alone, never to run the site.
 
 ## Running locally
 
-Open `index.html` directly in a browser — it works from `file://`, no server needed.
+Open `index.html` directly in a browser. Nothing fetches over the network — the resume data is a
+plain script that assigns a global, the font metrics are inlined as strings, and there are no ES
+modules — so `file://` needs no server or flags. A local server is still handy when iterating,
+because it lets you dodge the stale-script trap above by changing ports:
+
+```
+python3 -m http.server 8801
+```
 
 ## Deploying
 
