@@ -81,19 +81,57 @@
       }
     ];
 
-    if (exp.summaryLine) {
-      stack.push({ text: exp.summaryLine, style: "body", margin: [0, 4, 0, 0] });
-    } else if (exp.bullets.length) {
-      stack.push({
-        ul: exp.bullets,
-        style: "body",
-        margin: [0, 4, 0, 0],
-        markerColor: ACCENT
-      });
+    function engagementHeader(eng) {
+      return {
+        columns: [
+          {
+            width: "*",
+            text: eng.position
+              ? [
+                  { text: eng.position, bold: true, fontSize: 9.5, color: MUTED },
+                  { text: "  \u00b7  " + eng.client, fontSize: 9, color: MUTED }
+                ]
+              : [{ text: eng.client, fontSize: 9, color: MUTED }]
+          },
+          {
+            width: "auto",
+            text: eng.dates,
+            fontSize: 8.5,
+            color: MUTED,
+            alignment: "right",
+            margin: [8, 0, 0, 0]
+          }
+        ],
+        margin: [0, 5, 0, 0]
+      };
     }
 
-    // Keep a role header from being orphaned at the foot of a page.
-    return { stack: stack, unbreakable: false, margin: [0, 0, 0, isLast ? 0 : 9] };
+    function bulletList(bullets) {
+      return { ul: bullets, style: "body", margin: [0, 4, 0, 0], markerColor: ACCENT };
+    }
+
+    if (exp.engagements && exp.engagements.length) {
+      exp.engagements.forEach(function (eng) {
+        stack.push(engagementHeader(eng));
+        // pdfmake rejects an empty `ul`, and an engagement may legitimately
+        // have no bullets yet.
+        if (eng.bullets.length) stack.push(bulletList(eng.bullets));
+      });
+    } else if (exp.summaryLine) {
+      stack.push({ text: exp.summaryLine, style: "body", margin: [0, 4, 0, 0] });
+    } else if (exp.bullets.length) {
+      stack.push(bulletList(exp.bullets));
+    }
+
+    /*
+     * Deliberately breakable: a role with 24 bullets must be allowed to split
+     * across pages. The trade-off is that a role or engagement header can land
+     * at the foot of a page with its bullets overleaf. Current content
+     * paginates cleanly; if that changes, wrap each header together with its
+     * first bullet in an `unbreakable: true` stack rather than making the
+     * whole role unbreakable.
+     */
+    return { stack: stack, margin: [0, 0, 0, isLast ? 0 : 9] };
   }
 
   function skillColumns(skills) {

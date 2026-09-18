@@ -8,12 +8,45 @@
 (function () {
   "use strict";
 
-  // How many bullets survive per role, by density. Index matches RESUME.experiences.
-  var BULLET_BUDGET = {
-    concise: [7, 5, 0],
-    full: [10, 8, 0]
-  };
-  var SKILL_BUDGET = { concise: 12, full: 16 };
+  /*
+   * Per-entry bullet budgets now live on the data (`budget: { concise, full }`)
+   * rather than in a positional array here, so adding a role or engagement
+   * cannot silently shift another one's cap. A concise budget of 0 on a role
+   * marked `condense: true` collapses it to its `condensed` prose line, which
+   * is why the 2011-2015 QA role reads as one line in every variant.
+   */
+  var SKILL_BUDGET = { concise: 12, full: Infinity };
+
+  /*
+   * `fallback` matters: the old positional budget array yielded `undefined`
+   * for a missing entry, which the caller treated as "collapse". Defaulting to
+   * Infinity here would instead print every bullet of a role meant to be one
+   * line, so a `condense` role passes 0 and is collapsed unless it has been
+   * given an explicit positive budget.
+   */
+  function budgetFor(entry, density, fallback) {
+    var limit = (entry.budget || {})[density];
+    if (typeof limit === "number") return limit;
+    return typeof fallback === "number" ? fallback : Infinity;
+  }
+
+  function dateRange(startdate, enddate) {
+    return startdate + " \u2013 " + enddate;
+  }
+
+  /*
+   * Most bullets a single theme may occupy in one *entry* -- a role, or a
+   * single engagement within one. Bullets are ranked per entry, so an employer
+   * with three engagements can legitimately show more than `cap` bullets of
+   * one theme across them.
+   *
+   * Without this, relevance ranking alone lets one strong theme swamp a short
+   * list: the SRE variant filled three of seven slots with resilience work and
+   * two with database work, pushing out the flagship migration entirely. The
+   * cap keeps a concise resume reading across the breadth of the role, and it
+   * holds as more source material is added over time.
+   */
+  var THEME_CAP = { concise: 2, full: Infinity };
 
   function weightFor(item, jobId) {
     return (item.w && typeof item.w[jobId] === "number") ? item.w[jobId] : 0;
@@ -39,12 +72,30 @@
    *                 recruiter scanning the first line should hit the skills
    *                 that matter most for the role they are hiring for.
    */
-  function rank(items, jobId, limit, order) {
-    var kept = items
+  function rank(items, jobId, limit, order, themeCap) {
+    var ranked = items
       .map(function (item, index) { return { item: item, index: index }; })
       .filter(function (d) { return weightFor(d.item, jobId) > 0; })
-      .sort(byWeight(jobId))
-      .slice(0, limit);
+      .sort(byWeight(jobId));
+
+    // Walk the ranking rather than slicing it, so a theme that has used up its
+    // allowance is skipped and its slot goes to the next-best other theme.
+    var cap = themeCap || Infinity;
+    // Object.create(null), not {}: a theme named "constructor" or "toString"
+    // would otherwise inherit a truthy member, make `used >= cap` NaN-false
+    // forever, and silently defeat the cap. Theme names come from content
+    // edits, so this is reachable without touching code.
+    var perTheme = Object.create(null);
+    var kept = [];
+    for (var i = 0; i < ranked.length && kept.length < limit; i++) {
+      var theme = ranked[i].item.t;
+      if (theme) {
+        var used = perTheme[theme] || 0;
+        if (used >= cap) continue;
+        perTheme[theme] = used + 1;
+      }
+      kept.push(ranked[i]);
+    }
 
     if (order !== "relevance") {
       kept.sort(function (a, b) { return a.index - b.index; });
@@ -57,26 +108,49 @@
     var job = resume.jobTypes.filter(function (j) { return j.id === jobId; })[0];
     if (!job) throw new Error("Unknown job type: " + jobId);
 
-    var budget = BULLET_BUDGET[density] || BULLET_BUDGET.concise;
+    function bulletsFor(entry) {
+      return rank(entry.points || [], jobId, budgetFor(entry, density), "authored",
+                  THEME_CAP[density] || THEME_CAP.concise);
+    }
 
-    var experiences = resume.experiences.map(function (exp, i) {
-      var limit = budget[i];
+    var experiences = resume.experiences.map(function (exp) {
       var out = {
         position: exp.position,
         company: exp.company,
         location: exp.location,
-        dates: exp.startdate + " – " + exp.enddate,
+        dates: dateRange(exp.startdate, exp.enddate),
+        engagements: [],
         bullets: [],
         summaryLine: null
       };
 
-      // A role marked `condense` collapses to a single prose line unless the
-      // density explicitly buys it a bullet budget.
-      if (exp.condense && !limit) {
+      // A role marked `condense` collapses to one prose line unless it has an
+      // explicit positive budget for this density.
+      if (exp.condense && budgetFor(exp, density, 0) === 0) {
         out.summaryLine = exp.condensed;
-      } else {
-        out.bullets = rank(exp.points, jobId, limit || exp.points.length, "authored");
+        return out;
       }
+
+      if (exp.engagements && exp.engagements.length) {
+        // Each engagement is ranked against its own budget, so a long contract
+        // cannot crowd out a shorter one. An engagement with no bullets still
+        // renders its header, keeping the chronology complete.
+        out.engagements = exp.engagements
+          .map(function (eng) {
+            return {
+              // Drop a contract title identical to the employer's. Rendering
+              // "Site Reliability Engineer" again against a narrower date
+              // range reads as a mistake even though both are accurate.
+              position: eng.position === exp.position ? null : eng.position,
+              client: eng.client,
+              dates: dateRange(eng.startdate, eng.enddate),
+              bullets: bulletsFor(eng)
+            };
+          });
+      } else {
+        out.bullets = bulletsFor(exp);
+      }
+
       return out;
     });
 

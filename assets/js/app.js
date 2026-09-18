@@ -202,13 +202,42 @@
       row.appendChild(el("p", "meta", exp.dates));
       article.appendChild(row);
 
-      if (exp.summaryLine) {
-        article.appendChild(el("p", "condensed", exp.summaryLine));
-      } else {
-        var ul = el("ul");
-        exp.bullets.forEach(function (b) { ul.appendChild(el("li", null, b)); });
-        article.appendChild(ul);
+      function engagementHeader(eng) {
+        var row = el("div", "engagement-row");
+        var label = el("p", "engagement");
+        if (eng.position) {
+          label.appendChild(el("strong", null, eng.position));
+          label.appendChild(document.createTextNode(" \u00b7 " + eng.client));
+        } else {
+          label.appendChild(document.createTextNode(eng.client));
+        }
+        row.appendChild(label);
+        row.appendChild(el("p", "meta", eng.dates));
+        return row;
       }
+
+      function bulletList(bullets) {
+        var ul = el("ul");
+        bullets.forEach(function (b) { ul.appendChild(el("li", null, b)); });
+        return ul;
+      }
+
+      if (exp.engagements && exp.engagements.length) {
+        exp.engagements.forEach(function (eng) {
+          var block = el("div", "engagement-block");
+          block.appendChild(engagementHeader(eng));
+          if (eng.bullets.length) block.appendChild(bulletList(eng.bullets));
+          article.appendChild(block);
+        });
+      } else if (exp.summaryLine) {
+        article.appendChild(el("p", "condensed", exp.summaryLine));
+      } else if (exp.bullets.length) {
+        // Guard matches pdf.js. Reachable since `engagements: []` now falls
+        // through to role-level bullets, which may be empty -- an unguarded
+        // call appends an empty <ul> and its margin.
+        article.appendChild(bulletList(exp.bullets));
+      }
+
       section.appendChild(article);
     });
   }
