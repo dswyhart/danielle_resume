@@ -79,7 +79,9 @@ Terraform rather than whatever happened to be first in the file.
 one strong theme swamp a short list — the SRE variant once filled three of seven slots with
 resilience work and two with database work, pushing out the flagship migration bullet entirely.
 `THEME_CAP` in `assets/js/tailor.js` allows at most two bullets per theme in *Concise* mode, so
-a concise resume reads across the breadth of the role. Give a new bullet an existing theme when
+a concise resume reads across the breadth of the work. The cap applies per *entry* — a role, or
+one engagement within it — so an employer with three engagements can show more than two bullets
+of a theme across them. Give a new bullet an existing theme when
 it belongs to one; invent a new theme only when it genuinely stands apart.
 
 To add a job type, add an entry to `jobTypes` (with an `id`, `label`, `blurb`, `title`, and
@@ -88,7 +90,7 @@ Nothing else needs to change — the UI and the PDF builder both read from the d
 
 ### Client engagements under one employer
 
-A role may carry `engagements`: concurrent client assignments held under the same employer,
+A role may carry `engagements`: a sequence of client contracts worked under the same employer,
 each with its own title, client, dates, bullets, and budget. Listed newest first.
 
 ```js
@@ -108,9 +110,14 @@ engagements: [
 ]
 ```
 
-Each engagement renders as its own sub-block beneath the employer. One employer block with
-several titles is accurate and is how consulting work is conventionally shown; separate
-top-level entries with overlapping dates would read as job-hopping.
+Each engagement renders as its own sub-block beneath the employer, because they are all one
+employer — splitting them into top-level entries would imply several jobs. The contracts
+themselves need not overlap; what runs concurrently is the employer-level `position`, held for
+the whole tenure, alongside whichever contract title applied at the time.
+
+When an engagement's `position` matches the employer's, the sub-block shows only the client and
+dates. Repeating the title against a narrower date range reads as a mistake even when it is
+accurate.
 
 An engagement with an empty `points` array still renders its header, so the chronology stays
 complete while accomplishments for it are still being gathered. Roles without `engagements`

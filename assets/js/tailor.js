@@ -17,9 +17,17 @@
    */
   var SKILL_BUDGET = { concise: 12, full: Infinity };
 
-  function budgetFor(entry, density) {
+  /*
+   * `fallback` matters: the old positional budget array yielded `undefined`
+   * for a missing entry, which the caller treated as "collapse". Defaulting to
+   * Infinity here would instead print every bullet of a role meant to be one
+   * line, so a `condense` role passes 0 and is collapsed unless it has been
+   * given an explicit positive budget.
+   */
+  function budgetFor(entry, density, fallback) {
     var limit = (entry.budget || {})[density];
-    return typeof limit === "number" ? limit : Infinity;
+    if (typeof limit === "number") return limit;
+    return typeof fallback === "number" ? fallback : Infinity;
   }
 
   function dateRange(startdate, enddate) {
@@ -27,7 +35,10 @@
   }
 
   /*
-   * Most bullets a single theme may occupy in one role.
+   * Most bullets a single theme may occupy in one *entry* -- a role, or a
+   * single engagement within one. Bullets are ranked per entry, so an employer
+   * with three engagements can legitimately show more than `cap` bullets of
+   * one theme across them.
    *
    * Without this, relevance ranking alone lets one strong theme swamp a short
    * list: the SRE variant filled three of seven slots with resilience work and
@@ -70,7 +81,11 @@
     // Walk the ranking rather than slicing it, so a theme that has used up its
     // allowance is skipped and its slot goes to the next-best other theme.
     var cap = themeCap || Infinity;
-    var perTheme = {};
+    // Object.create(null), not {}: a theme named "constructor" or "toString"
+    // would otherwise inherit a truthy member, make `used >= cap` NaN-false
+    // forever, and silently defeat the cap. Theme names come from content
+    // edits, so this is reachable without touching code.
+    var perTheme = Object.create(null);
     var kept = [];
     for (var i = 0; i < ranked.length && kept.length < limit; i++) {
       var theme = ranked[i].item.t;
@@ -109,21 +124,24 @@
         summaryLine: null
       };
 
-      // A role marked `condense` collapses to one prose line when its budget
-      // for this density is 0.
-      if (exp.condense && budgetFor(exp, density) === 0) {
+      // A role marked `condense` collapses to one prose line unless it has an
+      // explicit positive budget for this density.
+      if (exp.condense && budgetFor(exp, density, 0) === 0) {
         out.summaryLine = exp.condensed;
         return out;
       }
 
-      if (exp.engagements) {
+      if (exp.engagements && exp.engagements.length) {
         // Each engagement is ranked against its own budget, so a long contract
         // cannot crowd out a shorter one. An engagement with no bullets still
         // renders its header, keeping the chronology complete.
         out.engagements = exp.engagements
           .map(function (eng) {
             return {
-              position: eng.position,
+              // Drop a contract title identical to the employer's. Rendering
+              // "Site Reliability Engineer" again against a narrower date
+              // range reads as a mistake even though both are accurate.
+              position: eng.position === exp.position ? null : eng.position,
               client: eng.client,
               dates: dateRange(eng.startdate, eng.enddate),
               bullets: bulletsFor(eng)

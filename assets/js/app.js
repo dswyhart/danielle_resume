@@ -205,8 +205,12 @@
       function engagementHeader(eng) {
         var row = el("div", "engagement-row");
         var label = el("p", "engagement");
-        label.appendChild(el("strong", null, eng.position));
-        label.appendChild(document.createTextNode(" \u00b7 " + eng.client));
+        if (eng.position) {
+          label.appendChild(el("strong", null, eng.position));
+          label.appendChild(document.createTextNode(" \u00b7 " + eng.client));
+        } else {
+          label.appendChild(document.createTextNode(eng.client));
+        }
         row.appendChild(label);
         row.appendChild(el("p", "meta", eng.dates));
         return row;

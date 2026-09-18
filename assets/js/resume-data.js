@@ -59,10 +59,14 @@ window.RESUME = {
       startdate: "April 2021",
       enddate: "Present",
       /*
-       * Nava is one employer with concurrent client engagements, each carrying
-       * its own title, dates, and bullets. `position` above is the title held
-       * with Nava itself and still current; the engagements below are the
-       * contracts worked under it, newest first.
+       * Nava is one employer with a sequence of client contracts, each under
+       * its own title, dates, and bullets, listed newest first. The contracts
+       * do not overlap; what runs concurrently is the employer-level
+       * `position` above -- the title held with Nava itself, still current --
+       * alongside whichever contract title applied at the time.
+       *
+       * They nest under one employer block because they are one employer.
+       * Splitting them into top-level entries would imply three jobs.
        *
        * `budget` is per-entry rather than a positional array in tailor.js, so
        * adding an engagement cannot silently shift another one's cap.

@@ -86,10 +86,12 @@
         columns: [
           {
             width: "*",
-            text: [
-              { text: eng.position, bold: true, fontSize: 9.5, color: MUTED },
-              { text: "  \u00b7  " + eng.client, fontSize: 9, color: MUTED }
-            ]
+            text: eng.position
+              ? [
+                  { text: eng.position, bold: true, fontSize: 9.5, color: MUTED },
+                  { text: "  \u00b7  " + eng.client, fontSize: 9, color: MUTED }
+                ]
+              : [{ text: eng.client, fontSize: 9, color: MUTED }]
           },
           {
             width: "auto",
@@ -121,8 +123,15 @@
       stack.push(bulletList(exp.bullets));
     }
 
-    // Keep a role header from being orphaned at the foot of a page.
-    return { stack: stack, unbreakable: false, margin: [0, 0, 0, isLast ? 0 : 9] };
+    /*
+     * Deliberately breakable: a role with 24 bullets must be allowed to split
+     * across pages. The trade-off is that a role or engagement header can land
+     * at the foot of a page with its bullets overleaf. Current content
+     * paginates cleanly; if that changes, wrap each header together with its
+     * first bullet in an `unbreakable: true` stack rather than making the
+     * whole role unbreakable.
+     */
+    return { stack: stack, margin: [0, 0, 0, isLast ? 0 : 9] };
   }
 
   function skillColumns(skills) {
