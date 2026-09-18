@@ -170,12 +170,23 @@ the browser console:
 }));
 ```
 
-Expect **1 page for every `concise`** and **2 for every `full`**. Anything else means a budget
+Expect **1 page for every `concise`** and **3 for every `full`**. Anything else means a budget
 needs tuning.
 
-Two pages for *Full* is fine, but check *where* the break lands. `pdf.js` deliberately allows a
-role to split across pages — a 24-bullet role has to — which means a role or engagement header
-can end up stranded at the foot of a page with its bullets overleaf. To measure that:
+The `concise` count is the one that matters, and it runs close to the edge — close enough that a
+single extra *wrapped line* spills it. Skills render in two half-width columns about 250pt wide,
+so a skill wraps to a second line once it renders wider than that: roughly 55 characters of
+ordinary prose, and fewer if the string is capital- or digit-heavy. Adding `Grafana` to the
+observability skill (49 to 58 characters) was by itself enough to push the SRE variant onto a
+second page *while the total text got shorter*. When concise overflows, count wrapped lines
+before assuming a bullet is too long.
+
+*Full* grew from two pages to three when the 2023-2025 review material landed. That is the
+uncapped mode working as intended, not a regression — but check *where* the break lands.
+
+`pdf.js` deliberately allows a role to split across pages — a 24-bullet role has to — which means
+a role or engagement header can end up stranded at the foot of a page with its bullets overleaf.
+To measure that:
 
 ```js
 ['sre','devops','cloud','platform'].forEach(id => {

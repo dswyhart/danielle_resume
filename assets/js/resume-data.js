@@ -23,7 +23,7 @@ window.RESUME = {
       blurb: "Availability, observability, and incident response",
       title: "Senior Site Reliability Engineer",
       summary:
-        "Senior Site Reliability Engineer with over a decade keeping enterprise cloud platforms available, observable, and recoverable. I lead zero-downtime database upgrades, chaos engineering and Game Day exercises, database-driven health monitoring, and observability rollouts across New Relic, Splunk, ELK, and CloudWatch, backed by production incident management and 24x7 on-call experience."
+        "Senior Site Reliability Engineer with over a decade keeping enterprise cloud platforms available, observable, and recoverable. I set technical direction for a federal platform team and lead zero-downtime database upgrades, chaos engineering and Game Day exercises, disaster recovery planning, and observability rollouts, backed by incident management and 24x7 on-call experience."
     },
     {
       id: "devops",
@@ -31,7 +31,7 @@ window.RESUME = {
       blurb: "Pipelines, release automation, and delivery safety",
       title: "Senior DevOps Engineer",
       summary:
-        "Senior engineer specializing in CI/CD architecture and release automation. I build shared Jenkins and Groovy pipeline libraries, semantic-version release automation, blue-green deployments, and automated quality gates that make releases safe and repeatable across large multi-repository programs."
+        "Senior engineer specializing in CI/CD architecture and release automation, now leading the DevOps workload for a federal platform team. I build shared Jenkins and Groovy pipeline libraries, semantic-version release automation, blue-green deployments, and quality gates that make releases safe and repeatable."
     },
     {
       id: "cloud",
@@ -47,7 +47,7 @@ window.RESUME = {
       blurb: "Shared services, standardization, and developer experience",
       title: "Senior Platform Engineer",
       summary:
-        "Platform engineer focused on shared services and developer experience across large multi-repository programs. I standardize delivery workflows, runtime versions, and security guardrails, and lead cross-repository migrations that cut technical debt while keeping product teams shipping."
+        "Platform engineer focused on shared services and developer experience across large multi-repository programs. I standardize delivery workflows, runtime versions, and security guardrails, set team priorities and mentor engineers, and lead migrations that cut technical debt while teams keep shipping."
     }
   ],
 
@@ -87,6 +87,11 @@ window.RESUME = {
               w: { sre: 10, devops: 9, cloud: 10, platform: 10 }
             },
             {
+              text: "Led post-cutover decommissioning across Jenkins, Lambda, infrastructure code, and environment inventories, retiring the legacy estate rather than leaving it running alongside v4.",
+              t: "migration",
+              w: { sre: 6, devops: 7, cloud: 9, platform: 7 }
+            },
+            {
               text: "Architected a shared Jenkins and Groovy CI library spanning 8+ repositories, standardizing delivery workflows, reusable deployment functions, and pipeline onboarding.",
               t: "cicd",
               w: { sre: 6, devops: 10, cloud: 4, platform: 9 }
@@ -107,6 +112,16 @@ window.RESUME = {
               w: { sre: 9, devops: 9, cloud: 4, platform: 6 }
             },
             {
+              text: "Owned the continuous deployment initiative from concept through technical specification, securing engineering and product buy-in to move off bi-weekly releases toward daily deployment.",
+              t: "release",
+              w: { sre: 5, devops: 10, cloud: 3, platform: 9 }
+            },
+            {
+              text: "Translated continuous deployment into a sequenced roadmap of milestones, tooling changes, and cross-team dependencies, broken down into an implementation-ready ticket backlog.",
+              t: "roadmap",
+              w: { sre: 4, devops: 7, cloud: 3, platform: 10 }
+            },
+            {
               text: "Standardized Node.js runtime upgrades from 18 through 24 across frontend, backend, and pipeline ecosystems, reducing technical debt and improving build stability.",
               t: "modernization",
               w: { sre: 4, devops: 7, cloud: 3, platform: 9 }
@@ -120,6 +135,16 @@ window.RESUME = {
               text: "Refactored Terraform child modules to eliminate hardcoded account numbers, ARNs, CIDR blocks, and regions, making the full infrastructure deployable into a new AWS account without code changes.",
               t: "iac",
               w: { sre: 5, devops: 7, cloud: 10, platform: 9 }
+            },
+            {
+              text: "Redesigned production autoscaling and right-sized capacity, cutting the steady-state footprint from 32 containers to 6 with no loss of availability or response time.",
+              t: "efficiency",
+              w: { sre: 9, devops: 6, cloud: 10, platform: 8 }
+            },
+            {
+              text: "Drove cost reduction across compute, storage, and CI/CD, including automated Artifactory image purging that reclaimed storage and stopped obsolete artifacts accumulating.",
+              t: "cost",
+              w: { sre: 6, devops: 8, cloud: 9, platform: 8 }
             },
             {
               text: "Led zero-downtime PostgreSQL upgrades from Amazon RDS 11 to 14.16, adding read-only endpoint support and production right-sizing to improve resiliency and performance.",
@@ -137,6 +162,21 @@ window.RESUME = {
               w: { sre: 9, devops: 4, cloud: 8, platform: 5 }
             },
             {
+              text: "Analyzed, reconfigured, and rebuilt the v4 environment's CloudWatch alarm set, replacing inherited alert noise with alarms the on-call rotation acts on.",
+              t: "observability",
+              w: { sre: 10, devops: 5, cloud: 6, platform: 6 }
+            },
+            {
+              text: "Repaired the JMaaS-Grafana integration alongside the partner teams that owned it, restoring accurate dashboards and timely alerting.",
+              t: "observability",
+              w: { sre: 8, devops: 5, cloud: 5, platform: 6 }
+            },
+            {
+              text: "Modernized the platform's load testing, giving the team current performance baselines to size capacity and autoscaling changes against.",
+              t: "performance",
+              w: { sre: 9, devops: 5, cloud: 7, platform: 6 }
+            },
+            {
               text: "Designed a parallelized Speedy ETL architecture and automated the Greenfield migration of 15+ ETL pipelines across DEV, TEST, IMPL, and PROD.",
               t: "etl",
               w: { sre: 7, devops: 6, cloud: 8, platform: 8 }
@@ -145,6 +185,11 @@ window.RESUME = {
               text: "Replaced log-based Lambda health checks with database-driven status monitoring, timeout restart handling, and fatal-log detection, improving ETL reliability.",
               t: "etl",
               w: { sre: 10, devops: 4, cloud: 6, platform: 5 }
+            },
+            {
+              text: "Engineered end-to-end data swap scheduling automation for the ETL process, taking hands-on coordination out of every swap and adding automated status notifications.",
+              t: "etl",
+              w: { sre: 7, devops: 8, cloud: 5, platform: 7 }
             },
             {
               text: "Established production-ready CI/CD for the React client, Single-SPA root-config, and import-map workflows, with SonarQube quality gates and New Relic browser and server observability.",
@@ -160,6 +205,16 @@ window.RESUME = {
               text: "Triaged a critical CVSS 9.4 dependency CVE, established that the vulnerable component was bundled but never invoked, and closed the finding with a formal attestation to CMS.",
               t: "security",
               w: { sre: 7, devops: 7, cloud: 6, platform: 6 }
+            },
+            {
+              text: "Migrated inter-service communication onto AWS PrivateLink and converted application database roles to read-only, removing public network paths and narrowing credential blast radius.",
+              t: "security",
+              w: { sre: 7, devops: 5, cloud: 10, platform: 7 }
+            },
+            {
+              text: "Owned the security and compliance posture behind a 100% security rating in the program's CSRAP assessment, a scored CMS review of platform security controls.",
+              t: "compliance",
+              w: { sre: 7, devops: 5, cloud: 7, platform: 8 }
             },
             {
               text: "Led the 2026 Risk Assessment epic, owning the pre-assessment compliance deliverables including the Configuration Management Plan, Privacy Impact Assessment, and System Design Documents.",
@@ -187,9 +242,29 @@ window.RESUME = {
               w: { sre: 10, devops: 4, cloud: 3, platform: 7 }
             },
             {
-              text: "Authored the platform's on-call, gold image, and database upgrade runbooks, establishing repeatable incident response and maintenance procedures.",
+              text: "Built, tested, and documented disaster recovery plans for the three remaining v4 environments, cutting estimated recovery time and raising the program's security rating 30%.",
+              t: "dr",
+              w: { sre: 10, devops: 5, cloud: 8, platform: 6 }
+            },
+            {
+              text: "Owned the on-call, deployment, and ETL rotation schedules, taking rotations outside the role's scope to keep full coverage across the team.",
+              t: "incident",
+              w: { sre: 9, devops: 6, cloud: 3, platform: 6 }
+            },
+            {
+              text: "Authored the platform's runbooks for on-call, gold images, database upgrades and recovery, ETL swaps, new environment setup, ECS troubleshooting, and alarm testing, establishing repeatable incident response and maintenance procedures.",
               t: "docs",
               w: { sre: 9, devops: 5, cloud: 4, platform: 8 }
+            },
+            {
+              text: "Took over technical direction of the DevOps workload, setting priorities, delegating scoped work to junior engineers, and acting as the primary point of contact for delivery.",
+              t: "leadership",
+              w: { sre: 8, devops: 9, cloud: 6, platform: 9 }
+            },
+            {
+              text: "Conducted 25 technical interviews at a 15% hire rate, trained other engineers to run them, and served as onboarding buddy for new engineers joining the platform.",
+              t: "hiring",
+              w: { sre: 6, devops: 6, cloud: 5, platform: 8 }
             },
             {
               text: "Served as play caller for production releases across the TEST, IMPL, and PROD lifecycle, coordinating multi-provider data refreshes for Medicare beneficiaries.",
@@ -377,7 +452,7 @@ window.RESUME = {
   skills: [
     { text: "Site Reliability Engineering", w: { sre: 10, devops: 7, cloud: 6, platform: 7 } },
     { text: "Incident Management and 24x7 On-Call", w: { sre: 10, devops: 5, cloud: 3, platform: 4 } },
-    { text: "Observability: New Relic, Splunk, ELK, CloudWatch", w: { sre: 10, devops: 6, cloud: 6, platform: 6 } },
+    { text: "Observability: New Relic, Splunk, ELK, Grafana", w: { sre: 10, devops: 6, cloud: 6, platform: 6 } },
     { text: "CI/CD Architecture and Release Automation", w: { sre: 7, devops: 10, cloud: 5, platform: 9 } },
     { text: "Jenkins, Groovy, GitHub Actions, SonarQube", w: { sre: 5, devops: 10, cloud: 4, platform: 8 } },
     { text: "Blue-Green Deployments and Akamai Cache Purge", w: { sre: 7, devops: 9, cloud: 4, platform: 6 } },
@@ -396,7 +471,14 @@ window.RESUME = {
     { text: "CMS Compliance Deliverables and Risk Assessments", w: { sre: 6, devops: 5, cloud: 5, platform: 8 } },
     { text: "Release Management and Production Play Calling", w: { sre: 8, devops: 9, cloud: 3, platform: 5 } },
     { text: "Technical Advisory and Systems Assessment", w: { sre: 6, devops: 5, cloud: 5, platform: 8 } },
-    { text: "Roadmapping and Dependency Planning", w: { sre: 5, devops: 5, cloud: 4, platform: 8 } }
+    { text: "Roadmapping and Dependency Planning", w: { sre: 5, devops: 5, cloud: 4, platform: 8 } },
+    { text: "Autoscaling Design and Capacity Right-Sizing", w: { sre: 9, devops: 5, cloud: 10, platform: 7 } },
+    { text: "Cloud Cost Optimization", w: { sre: 6, devops: 7, cloud: 10, platform: 8 } },
+    { text: "Disaster Recovery Planning and Testing", w: { sre: 10, devops: 4, cloud: 8, platform: 6 } },
+    { text: "AWS PrivateLink and Network Isolation", w: { sre: 6, devops: 4, cloud: 9, platform: 6 } },
+    { text: "Load and Performance Testing", w: { sre: 9, devops: 6, cloud: 6, platform: 6 } },
+    { text: "Technical Leadership, Mentoring, and Delegation", w: { sre: 8, devops: 8, cloud: 6, platform: 9 } },
+    { text: "Technical Interviewing and Hiring", w: { sre: 5, devops: 5, cloud: 4, platform: 7 } }
   ],
 
   courses: [
