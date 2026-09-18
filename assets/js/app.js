@@ -231,7 +231,10 @@
         });
       } else if (exp.summaryLine) {
         article.appendChild(el("p", "condensed", exp.summaryLine));
-      } else {
+      } else if (exp.bullets.length) {
+        // Guard matches pdf.js. Reachable since `engagements: []` now falls
+        // through to role-level bullets, which may be empty -- an unguarded
+        // call appends an empty <ul> and its margin.
         article.appendChild(bulletList(exp.bullets));
       }
 
